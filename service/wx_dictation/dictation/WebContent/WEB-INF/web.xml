@@ -56,7 +56,6 @@
     <servlet-name>CategoryServlet</servlet-name>
     <url-pattern>/category</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>BookServlet</display-name>
@@ -67,7 +66,7 @@
     <servlet-name>BookServlet</servlet-name>
     <url-pattern>/book</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <description></description>
     <display-name>CollectionServlet</display-name>
     <servlet-name>CollectionServlet</servlet-name>
@@ -77,5 +76,55 @@
     <servlet-name>CollectionServlet</servlet-name>
     <url-pattern>/collection</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SessionServlet</display-name>
+    <servlet-name>SessionServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.SessionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SessionServlet</servlet-name>
+    <url-pattern>/session</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UnitServlet</display-name>
+    <servlet-name>UnitServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.UnitServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UnitServlet</servlet-name>
+    <url-pattern>/unit</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CourseServlet</display-name>
+    <servlet-name>CourseServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.CourseServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CourseServlet</servlet-name>
+    <url-pattern>/course</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>WordServlet</display-name>
+    <servlet-name>WordServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.WordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WordServlet</servlet-name>
+    <url-pattern>/word</url-pattern>
+  </servlet-mapping>
   
+  <servlet>
+    <description></description>
+    <display-name>WordSelectedServlet</display-name>
+    <servlet-name>WordSelectedServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.WordSelectedServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WordSelectedServlet</servlet-name>
+    <url-pattern>/wordSelected</url-pattern>
+  </servlet-mapping>
 </web-app>

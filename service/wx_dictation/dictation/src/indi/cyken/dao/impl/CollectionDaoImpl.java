@@ -6,15 +6,18 @@ import java.util.Map;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 
 import indi.cyken.dao.CollectionDao;
 import indi.cyken.domain.Book;
 import indi.cyken.domain.BookLanguage;
+import indi.cyken.domain.BookType;
 import indi.cyken.domain.BookVersion;
 import indi.cyken.domain.Category;
 import indi.cyken.domain.Collection;
 import indi.cyken.domain.CollectionItem;
+import indi.cyken.domain.User;
 import indi.cyken.utils.DataSourceUtils;
 
 public class CollectionDaoImpl implements CollectionDao {
@@ -29,13 +32,9 @@ public class CollectionDaoImpl implements CollectionDao {
 		String sql="select * from t_collection where userid = ?";
 		Collection collection = qr.query(sql, new BeanHandler<>(Collection.class), userid);
 		
-		//封装user
-//		String sql="select * from t_user where userid = ?";
-//		User user=qr.query(sql, new BeanHandler<>(User.class), userid);
-//		collection.setUser(user);
 		
 		//查询Book
-		sql="select distinct  * from t_collection_item ci,t_book b where ci.bookid = b.bookid and ci.userid = ?";
+		sql="select distinct  * from t_collection_item ci,t_book b,t_book_category bc,t_book_lang bl,t_book_type bt,t_book_version bv where ci.bookid = b.bookid and ci.userid = ? and b.cid=bc.cid and b.langid=bl.langid and b.typeid=bt.typeid and b.versionid=bv.versionid;";
 		List<Map<String, Object>> query = qr.query(sql, new MapListHandler(), userid);
 		for (Map<String, Object> map : query) {
 			//封装Book
@@ -45,12 +44,15 @@ public class CollectionDaoImpl implements CollectionDao {
 			BeanUtils.populate(language, map);
 			Category category=new Category();
 			BeanUtils.populate(category, map);
+			BookType booktype=new BookType();
+			BeanUtils.populate(booktype, map);
 
 			Book book=new Book();
 			BeanUtils.populate(book, map);
 			book.setVersion(version);
 			book.setLanguage(language);
 			book.setBookCategory(category);
+			book.setBooktype(booktype);
 			
 			//封装CollectionItem
 			CollectionItem ci=new CollectionItem();
@@ -121,6 +123,18 @@ public class CollectionDaoImpl implements CollectionDao {
 				ci.getBook().getBookid());
 		System.out.println("删除了t_collection_item第几行："+line);
 		
+	}
+
+	/**
+	 * 通过bookid和sessionid来获取收藏项
+	 */
+	@Override
+	public CollectionItem findByBidAndUid(String bookid, String userid) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="select * from t_collection_item where bookid=? and userid=?;";
+		return qr.query(sql, new BeanHandler<>(CollectionItem.class), bookid,userid);
+
+
 	}
 
 

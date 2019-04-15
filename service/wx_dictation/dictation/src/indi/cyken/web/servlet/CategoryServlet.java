@@ -24,6 +24,9 @@ public class CategoryServlet extends BaseServlet {
 	public String findAll(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 1.调用categoryservice 查询所有的分类 返回值list
+		System.out.println("调用了CategoryServlet findAll");
+		String sessionId = request.getHeader("Cookie");
+		System.out.println("传到后端的登录态"+sessionId);
 		CategoryService cs = (CategoryService) BeanFactory.getBean("CategoryService");
 		List<Category> clist = null;
 		try {
@@ -42,5 +45,41 @@ public class CategoryServlet extends BaseServlet {
 		
 		return null;
 	}
+	
+
+	/**
+	 * 微信端获取所有课本分类
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public String WXGetAllCategory(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// 1.调用categoryservice 查询所有的分类 返回值list
+		System.out.println("调用了CategoryServlet findAll");
+		String sessionId = request.getHeader("Cookie");
+		System.out.println("传到后端的登录态"+sessionId);
+		CategoryService cs = (CategoryService) BeanFactory.getBean("CategoryService");
+		List<Category> clist = null;
+		try {
+			clist = cs.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// 2.将返回值转成json格式 返回到页面上
+		//request.setAttribute("clist", clist);
+		String json = JsonUtil.list2json(clist);
+		
+		//3.写回去
+	    response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().println(json);
+		
+		return null;
+	}
+	
 
 }

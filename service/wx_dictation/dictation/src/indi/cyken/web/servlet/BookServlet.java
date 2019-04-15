@@ -12,6 +12,7 @@ import indi.cyken.domain.PageBean;
 import indi.cyken.service.BookService;
 import indi.cyken.utils.BeanFactory;
 import indi.cyken.utils.JsonUtil;
+import indi.cyken.utils.WriteBackUtil;
 
 /**
  * 课本相关servlet
@@ -53,22 +54,21 @@ public class BookServlet extends BaseServlet {
 	 * @throws Exception 
 	 */
 	public String  getById(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		//1.获取商品的id
+		//1.获取课本的id
 		String bid=request.getParameter("bookid");
 		
 		//2.调用service
 		//ProductService ps=new ProductServiceImpl();
 		BookService ps=(BookService) BeanFactory.getBean("BookService");
 		Book b=ps.getByBid(bid);
-		
-		//3.将结果放入request中 请求转发
-		request.setAttribute("bean", b);
-		
-		//写回去
-		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().println(b.getBookname());
+		if(b!=null && b.getBookid().length()>0) {
+			response.setContentType("text/html;charset=utf-8");
+			response.getWriter().println(b.getBookname());
+			return "success:查询成功";
 
-		return "success:查询成功";
+		}
+		
+		return "fail:根据bookid查询课本失败";
 		//return "/jsp/product_info.jsp";
 	}
 	
@@ -96,5 +96,56 @@ public class BookServlet extends BaseServlet {
 		return "succes:按类别分页查询课本成功";
 		//return "/jsp/product_list.jsp";
 	}
+	
+	
+	/**
+	 * 通过分类ID获取该类下的所有课本
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public String  WXGetBookByCategoryId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		//1.获取商品的id
+		String categoryid=request.getParameter("categoryid");
+		System.out.println("接收到的课本分类ID："+categoryid);
+		System.out.println("调用了BookServlet中的 WXGetBookByCategory 方法");
+		BookService bs = (BookService) BeanFactory.getBean("BookService");
+		List<Book> blist = null;
+		try {
+			blist = bs.getByCategoryId(categoryid);
+			if(blist!=null&& blist.size()>0) {
+				// 2.将返回值转成json格式 返回到页面上
+				//request.setAttribute("blist", blist);
+				String json = JsonUtil.list2json(blist);
+				//3.写回去
+				WriteBackUtil.WriteBackJsonStr(json, response);
+				return "success:根据categoryid获取课本成功";
+			}else {
+				return "success:根据categoryid获取课本失败";
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "success:根据categoryid获取课本失败";
+	}
+	
+	
+	/**
+	 * 微信端通过bookid获取课本信息
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public String  WXGetBookByBookId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		return getById(request,response);
+	}
+	
+	
+	
 
 }

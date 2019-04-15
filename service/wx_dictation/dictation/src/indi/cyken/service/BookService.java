@@ -14,5 +14,7 @@ public interface BookService {
 
 	PageBean<Book> findByPage(int currPage, int pageSize, String cid) throws Exception;
 
+	List<Book> getByCategoryId(String categoryid) throws Exception;
+
 
 }

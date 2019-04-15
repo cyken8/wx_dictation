@@ -4,6 +4,7 @@ import java.util.List;
 
 import indi.cyken.domain.Book;
 import indi.cyken.domain.Collection;
+import indi.cyken.domain.CollectionItem;
 
 public interface CollectionService {
 
@@ -11,7 +12,11 @@ public interface CollectionService {
 
 	void add(Collection collection) throws Exception;
 
-	void delete(Collection collection) throws Exception;;
+	void delete(Collection collection) throws Exception;
+
+	CollectionItem findByBidAndSid(String bookid, String sessionid) throws Exception;
+
+	CollectionItem findByBidAndUid(String userid, String bookid) throws Exception;
 
 
 

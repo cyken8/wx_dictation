@@ -4,11 +4,20 @@
 	<bean id="UserService" class="indi.cyken.service.impl.UserServiceImpl"></bean>
 	<bean id="BookService" class="indi.cyken.service.impl.BookServiceImpl"></bean>
 	<bean id="CollectionService" class="indi.cyken.service.impl.CollectionServiceImpl"></bean>
-
+	<bean id="SessionService" class="indi.cyken.service.impl.SessionServiceImpl"></bean>
+	<bean id="UnitService" class="indi.cyken.service.impl.UnitServiceImpl"></bean>
+	<bean id="CourseService" class="indi.cyken.service.impl.CourseServiceImpl"></bean>
+	<bean id="WordService" class="indi.cyken.service.impl.WordServiceImpl"></bean>
+	<bean id="WordSelectedService" class="indi.cyken.service.impl.WordSelectedServiceImpl"></bean>
 
    <bean id="UserDao" class="indi.cyken.dao.impl.UserDaoImpl"/>
    <bean id="CategoryDao" class="indi.cyken.dao.impl.CategoryDaoImpl"/>
    <bean id="BookDao" class="indi.cyken.dao.impl.BookDaoImpl"/>
    <bean id="CollectionDao" class="indi.cyken.dao.impl.CollectionDaoImpl"/>
+   <bean id="SessionDao" class="indi.cyken.dao.impl.SessionDaoImpl"/>
+   <bean id="UnitDao" class="indi.cyken.dao.impl.UnitDaoImpl"/>
+   <bean id="CourseDao" class="indi.cyken.dao.impl.CourseDaoImpl"/>
+   <bean id="WordDao" class="indi.cyken.dao.impl.WordDaoImpl"/>
+   <bean id="WordSelectedDao" class="indi.cyken.dao.impl.WordSelectedDaoImpl"/>
      
 </beans>

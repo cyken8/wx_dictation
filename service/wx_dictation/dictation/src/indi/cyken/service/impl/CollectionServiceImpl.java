@@ -4,9 +4,11 @@ import java.util.List;
 
 import indi.cyken.dao.BookDao;
 import indi.cyken.dao.CollectionDao;
+import indi.cyken.dao.UserDao;
 import indi.cyken.domain.Book;
 import indi.cyken.domain.Collection;
 import indi.cyken.domain.CollectionItem;
+import indi.cyken.domain.User;
 import indi.cyken.service.CollectionService;
 import indi.cyken.utils.BeanFactory;
 import indi.cyken.utils.DataSourceUtils;
@@ -74,6 +76,32 @@ public class CollectionServiceImpl implements CollectionService {
 			throw e;
 		}
 		
+	}
+
+	/**
+	 * 通过bookid和sessionid来获取收藏项
+	 */
+	@Override
+	public CollectionItem findByBidAndSid(String bookid, String sessionid) throws Exception {
+		//1.根据sessionid获取userid
+		UserDao ud=(UserDao) BeanFactory.getBean("UserDao");
+		User user = ud.getUserBySessionId(sessionid);
+		if(user!=null&& user.getUserid().length()>0) {
+			CollectionDao cd=(CollectionDao) BeanFactory.getBean("CollectionDao");
+			return cd.findByBidAndUid(bookid,user.getUserid());
+		}else {
+			return null;
+		}
+		
+	}
+
+	/**
+	 * 通过bookid和userid来获取收藏项
+	 */
+	@Override
+	public CollectionItem findByBidAndUid(String userid, String bookid) throws Exception {
+		CollectionDao cd=(CollectionDao) BeanFactory.getBean("CollectionDao");
+		return cd.findByBidAndUid(bookid,userid);
 	}
 	
 	

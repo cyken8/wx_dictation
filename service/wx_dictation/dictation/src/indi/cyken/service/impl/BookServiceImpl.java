@@ -43,6 +43,16 @@ public class BookServiceImpl implements BookService {
 	}
 
 	
+	/**
+	 * 根据课本分类CategoryId来获取分类下的所有我看吧
+	 */
+	@Override
+	public List<Book> getByCategoryId(String categoryid) throws Exception {
+		BookDao bdao=(BookDao) BeanFactory.getBean("BookDao");
+		return bdao.getByCategoryId(categoryid);
+	}
+
+	
 	
 
 }

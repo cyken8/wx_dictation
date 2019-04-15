@@ -19,6 +19,9 @@ public interface BookDao  {
 
 	int getTotalCount(String cid) throws Exception;
 
+	List<Book> getByCategoryId(String categoryid) throws Exception;
+
+
 
 
 

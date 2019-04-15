@@ -10,4 +10,12 @@ public interface UserService {
 
 	User getByUid(String userid) throws Exception;
 
+	User getByOpenId(String openid) throws Exception;
+
+	int add(User user) throws Exception;
+
+	User getUserBySessionId(String sessionId) throws Exception;
+
+	
+
 }

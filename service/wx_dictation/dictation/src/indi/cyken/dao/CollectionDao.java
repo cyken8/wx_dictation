@@ -16,6 +16,8 @@ public interface CollectionDao {
 
 	void delete(CollectionItem ci) throws Exception;
 
+	CollectionItem findByBidAndUid(String bookid, String userid)throws Exception;
+
 	
 
 }

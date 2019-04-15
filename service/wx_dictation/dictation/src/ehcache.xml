@@ -33,4 +33,6 @@
 				移除缓存中element的策略。默认是LRU，可选的有LFU和FIFO
 
 	-->
+	
+	
 </ehcache>

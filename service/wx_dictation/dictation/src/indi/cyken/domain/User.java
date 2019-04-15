@@ -22,7 +22,7 @@ public class User {
 	
 	private String provinceid;
 	private String  cityid;
-
+	private String open_id;
 	
 	
 	public String getUserid() {
@@ -108,6 +108,12 @@ public class User {
 	}
 	public void setCityid(String cityid) {
 		this.cityid = cityid;
+	}
+	public String getOpen_id() {
+		return open_id;
+	}
+	public void setOpen_id(String open_id) {
+		this.open_id = open_id;
 	}
 
 	
