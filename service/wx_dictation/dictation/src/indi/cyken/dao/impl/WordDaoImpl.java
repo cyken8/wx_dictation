@@ -57,71 +57,76 @@ public class WordDaoImpl implements WordDao {
 	}
 
 	/**
-	 * 根据用户id和课时id获取课时下被筛选过的单词
+	 * 添加用户自定义单词
 	 */
-//	@Override
-//	public List<Word> getSelectedWordsByUidCid(String userid, String courseid) throws Exception {
-//		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
-//		String sql="SELECT w1.wordid,w1.wordtext,w1.voiceurl,w1.lengtypeid,w1.cometypeid,w1.courseid FROM t_word w1,t_word_userselect wu WHERE wu.userid=? and wu.wordid=w1.wordid and w1.cometypeid= ? AND w1.courseid=?\r\n" + 
-//				"UNION \r\n" + 
-//				"SELECT w2.wordid,w2.wordtext,w2.voiceurl,w2.lengtypeid,w2.cometypeid,w2.courseid FROM t_word w2,t_word_ex we,t_word_userselect wu2 WHERE wu2.userid=? and we.userid=? AND we.wordid=w2.wordid AND w2.courseid=?; ";
-//		
-//		List<Map<String, Object>> query = qr.query(sql, new MapListHandler(),userid, DBTableField.WORD_COMETYPE_STANDAR,courseid,userid,userid,courseid);
-//		List<Word> list=new LinkedList<>();
-//		for (Map<String, Object> map : query) {
-//			WordLengType wl=new WordLengType();
-//			BeanUtils.populate(wl, map);
-//			WordComeType wc=new WordComeType();
-//			BeanUtils.populate(wc, map);
-//			Course course=new Course();
-//			BeanUtils.populate(course, map);
-//			
-//			Word word=new Word();
-//			BeanUtils.populate(word, map);
-//			word.setLengtype(wl);
-//			word.setCometype(wc);
-//			word.setCourse(course);
-//			
-//			list.add(word);
-//		}
-//		return list;
-//	}
+	@Override
+	public int addWord(String wordid, String wordtext, String voiceurl, String lengtypeid, String cometypeid,
+			String courseid) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="insert into t_word values(?,?,?,?,?,?);";
+		int ret = qr.update(sql,wordid,wordtext,voiceurl,lengtypeid,cometypeid,courseid);
+		return ret;
+		
+	}
 
 	/**
-	 * 查询用户单词筛选项是否存在
+	 * 添加自定义单词，用户映射
 	 */
-//	@Override
-//	public int queryWordSelItem(String userid, String wordid) throws Exception {
-//		// TODO Auto-generated method stub
-//		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
-//		String sql="select count(*) from t_word_userselect where userid=? and wordid=?";
-//		return qr.query(sql, new ScalarHandler<Long>(),userid,wordid).intValue();
-//
-//
-//	}
+	@Override
+	public int addWordExUserMap(String weid, String wordid, String userid) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="insert into t_word_ex values(?,?,?);";
+		int ret = qr.update(sql,weid,userid,wordid);
+		return ret;
+	}
 
 	/**
-	 * 删除用户单词筛选项
-	 * @return 
+	 * 根据用户id和课时id获取课时下所有的自定义单词
 	 */
-//	@Override
-//	public int deleteWordSelItem(String userid, String wordid) throws Exception {
-//		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
-//		String sql="delete from t_word_userselect where userid=? and wordid=?";
-//		return qr.update(sql,userid,wordid);
-//		
-//	}
-//
+	@Override
+	public List<Word> getWordEx(String userid, String courseid) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="SELECT w2.wordid,w2.wordtext,w2.voiceurl,w2.lengtypeid,w2.cometypeid,w2.courseid FROM t_word w2,t_word_ex we WHERE  we.userid=? AND w2.courseid=? AND we.wordid=w2.wordid ; ";
+		
+		List<Map<String, Object>> query = qr.query(sql, new MapListHandler(),userid,courseid);
+		List<Word> list=new LinkedList<>();
+		for (Map<String, Object> map : query) {
+			WordLengType wl=new WordLengType();
+			BeanUtils.populate(wl, map);
+			WordComeType wc=new WordComeType();
+			BeanUtils.populate(wc, map);
+			Course course=new Course();
+			BeanUtils.populate(course, map);
+			
+			Word word=new Word();
+			BeanUtils.populate(word, map);
+			word.setLengtype(wl);
+			word.setCometype(wc);
+			word.setCourse(course);
+			
+			list.add(word);
+		}
+		return list;
+	}
 
 	/**
-	 * 添加用户单词筛选项
-	 * @return 
+	 * 删除用户自定义单词
 	 */
-//	@Override
-//	public int addWordSelItem(String id,String userid, String wordid) throws Exception {
-//		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
-//		String sql="insert into t_word_userselect values(?,?,?)";
-//		return qr.update(sql,id,userid,wordid);
-//	}
+	@Override
+	public void delWordEx(String wordid, String userid) throws Exception {
+		// TODO Auto-generated method stub
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="delete from t_word_ex where wordid=? and userid=?";
+		qr.update(sql, wordid,userid);
+		
+	}
+
+
+	
+
+
+	
+
+
 
 }

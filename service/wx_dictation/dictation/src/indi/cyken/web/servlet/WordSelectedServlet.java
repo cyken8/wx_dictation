@@ -42,7 +42,7 @@ public class WordSelectedServlet extends BaseServlet {
 		//2.调用service 通过oid 返回值:order
 		WordSelectedService ws=(WordSelectedService) BeanFactory.getBean("WordSelectedService");
 		List<Word> wlist=ws.getSelectedWordsByUidCid(userid,courseid);
-		if(wlist!=null&&wlist.size()>0) {
+		if(wlist!=null) {
 			String jsonstr = JsonUtil.list2json(wlist);
 			JSONObject jsonObj=new JSONObject();
 			jsonObj.put("code", FEIPCodeEnum.OK.getCode());
@@ -53,6 +53,7 @@ public class WordSelectedServlet extends BaseServlet {
 			return "success:获取课时下所有单词成功";
 		}else {
 			JSONObject jsonObj=new JSONObject();
+			jsonObj.put("state", 0);
 			jsonObj.put("code", FEIPCodeEnum.VALUE_NULL.getCode());
 			jsonObj.put("data","{}" );
 			String jsonstr2=JsonUtil.object2json(jsonObj);

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 
@@ -15,6 +16,7 @@ import indi.cyken.domain.BookLanguage;
 import indi.cyken.domain.BookType;
 import indi.cyken.domain.BookVersion;
 import indi.cyken.domain.Category;
+import indi.cyken.domain.Collection;
 import indi.cyken.domain.Course;
 import indi.cyken.domain.Unit;
 import indi.cyken.utils.DataSourceUtils;
@@ -61,6 +63,18 @@ public class CourseDaoImpl implements CourseDao {
 
 		}
 		return list;
+	}
+
+	/**
+	 * 通过课时id获取课时语言
+	 */
+	@Override
+	public BookLanguage getBookLangByCourseid(String courseId) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="SELECT b.langid,bl.langname FROM t_course c,t_unit u,t_book b,t_book_lang bl WHERE c.courseid=? AND c.unitid=u.unitid AND u.bookid=b.bookid AND b.langid=bl.langid;" ;
+		BookLanguage language = qr.query(sql, new BeanHandler<>(BookLanguage.class), courseId);
+		return language;
+
 	}
 
 }

@@ -4,7 +4,7 @@ import indi.cyken.dao.SessionDao;
 import indi.cyken.dao.UserDao;
 import indi.cyken.dao.impl.UserDaoImpl;
 import indi.cyken.domain.User;
-
+import indi.cyken.domain.UserTwo;
 import indi.cyken.service.UserService;
 import indi.cyken.utils.BeanFactory;
 
@@ -66,6 +66,26 @@ public class UserServiceImpl implements UserService {
 		UserDao ud=(UserDao) BeanFactory.getBean("UserDao");
 		// TODO Auto-generated method stub
 		return ud.getUserBySessionId(sessionId);
+	}
+
+	/**
+	 * 根据用户id和密码查询用户是否存在
+	 */
+	@Override
+	public UserTwo queryByUidAndPass(String userid, String password) throws Exception {
+		UserDao ud=(UserDao) BeanFactory.getBean("UserDao");
+		// TODO Auto-generated method stub
+		return ud.queryByUidAndPass(userid,password);
+	}
+
+	/**
+	 * 根据用户id查询用户具体信息
+	 */
+	@Override
+	public UserTwo getUserInfoByUid(String userid) throws Exception {
+		UserDao ud=(UserDao) BeanFactory.getBean("UserDao");
+		// TODO Auto-generated method stub
+		return ud.getUserInfoByUid(userid);
 	}
 
 	

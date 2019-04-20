@@ -1,6 +1,7 @@
 package indi.cyken.service;
 
 import indi.cyken.domain.User;
+import indi.cyken.domain.UserTwo;
 
 public interface UserService {
 
@@ -15,6 +16,10 @@ public interface UserService {
 	int add(User user) throws Exception;
 
 	User getUserBySessionId(String sessionId) throws Exception;
+
+	UserTwo queryByUidAndPass(String userid, String password) throws Exception;
+
+	UserTwo getUserInfoByUid(String userid) throws Exception;
 
 	
 

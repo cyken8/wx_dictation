@@ -19,6 +19,23 @@ public class UploadUtils {
 		}
 	}
 	
+	
+	/**
+	 * 获取随机名称(代指定前缀）
+	 * @param realName 真实名称
+	 * @return uuid
+	 */
+	public static String getUUIDName(String  prefix,String realName){
+		//realname  可能是  1.jpg   也可能是  1
+		//获取后缀名
+		int index = realName.lastIndexOf(".");
+		if(index==-1){
+			return prefix+"_"+UUID.randomUUID().toString().replace("-", "").toUpperCase();
+		}else{
+			return prefix+"_"+UUID.randomUUID().toString().replace("-", "").toUpperCase()+realName.substring(index);
+		}
+	}
+	
 	/**
 	 * 获取文件真实名称
 	 * @param name

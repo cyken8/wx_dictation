@@ -27,5 +27,10 @@ public interface DBTableField {
 	//自定义keb 
 	String BOOK_COMETYPE_EX="";
 	
+	//单词长度类别
+	String WORD_LENGTYPE_SHORTWORD="WL1001";
+	String WORD_LENGTYPE_LONGWORD="WL1002";
+	
+	
 
 }

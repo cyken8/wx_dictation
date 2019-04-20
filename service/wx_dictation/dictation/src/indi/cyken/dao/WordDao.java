@@ -8,12 +8,14 @@ public interface WordDao {
 
 	List<Word> getWordsByUidCid(String userid, String courseid) throws Exception;
 
-//	List<Word> getSelectedWordsByUidCid(String userid, String courseid)throws Exception;
-//
-//	int queryWordSelItem(String userid, String wordid)throws Exception;
-//
-//	int deleteWordSelItem(String userid, String wordid)throws Exception;
-//
-//	int addWordSelItem(String id,String userid, String wordid) throws Exception;
+	int addWord(String wordid, String wordtext, String voiceurl, String lengtypeid, String cometypeid, String courseid) throws Exception;
+
+	int addWordExUserMap(String weid, String wordid, String userid) throws Exception;
+
+	List<Word> getWordEx(String userid, String courseid) throws Exception;
+
+	void delWordEx(String wordid, String userid) throws Exception;
+
+
 
 }

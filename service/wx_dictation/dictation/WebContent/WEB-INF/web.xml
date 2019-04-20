@@ -116,7 +116,6 @@
     <servlet-name>WordServlet</servlet-name>
     <url-pattern>/word</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>WordSelectedServlet</display-name>
@@ -126,5 +125,46 @@
   <servlet-mapping>
     <servlet-name>WordSelectedServlet</servlet-name>
     <url-pattern>/wordSelected</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BDOcrServlet</display-name>
+    <servlet-name>BDOcrServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.BDOcrServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BDOcrServlet</servlet-name>
+    <url-pattern>/bdOcr</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ScoreServlet</display-name>
+    <servlet-name>ScoreServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.ScoreServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ScoreServlet</servlet-name>
+    <url-pattern>/score</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BdAipSpeechServlet</display-name>
+    <servlet-name>BdAipSpeechServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.BdAipSpeechServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BdAipSpeechServlet</servlet-name>
+    <url-pattern>/bdAipSpeech</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>WordWrongServlet</display-name>
+    <servlet-name>WordWrongServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.WordWrongServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WordWrongServlet</servlet-name>
+    <url-pattern>/wordWrong</url-pattern>
   </servlet-mapping>
 </web-app>

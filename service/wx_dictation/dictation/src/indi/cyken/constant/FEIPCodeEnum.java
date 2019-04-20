@@ -9,7 +9,9 @@ public enum FEIPCodeEnum {
 	SIGN_ERROR(400,"签名错误"),
 	NO_LOGIN(401,"未登录"),
 	PAY_ERROR(501,"支付异常"),
-	ILLEGAL_SESSION(0001,"登录态异常");
+	ILLEGAL_SESSION(0001,"登录态异常"),
+	FAIL(9999,"其他错误"),
+	USER_NOTEXIST(10000,"用户不存在");
 	
 	private Integer code;
 	private String msg;

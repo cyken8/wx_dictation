@@ -10,4 +10,5 @@ public interface WordSelectedService {
 	List<Word> getSelectedWordsByUidCid(String userid, String courseid) throws Exception;
 
 	int updateWordSelState(String userid, List<JSONObject> list) throws Exception;
+
 }
