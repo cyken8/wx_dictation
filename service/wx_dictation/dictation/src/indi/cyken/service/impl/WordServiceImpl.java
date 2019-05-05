@@ -125,6 +125,15 @@ public class WordServiceImpl implements WordService {
 		}
 	}
 
+	/**
+	 * 根据课时获取所有标准单词
+	 */
+	@Override
+	public List<Word> getWordsByCid(String courseid) throws Exception {
+		WordDao wd=(WordDao) BeanFactory.getBean("WordDao");
+		return wd.getWordsByCid(courseid);
+	}
+
 
 
 

@@ -1,6 +1,5 @@
 package indi.cyken.service.impl;
 
-import java.io.InputStream;
 import java.util.List;
 
 import indi.cyken.dao.CategoryDao;
@@ -49,10 +48,6 @@ public class CategoryServiceImpl implements CategoryService {
 		return list;
 	}
 	
-	
-//	public static void main(String[] args) {
-//		InputStream is = CategoryServiceImpl.class.getClassLoader().getResourceAsStream("ehcache.xml");
-//		System.out.println(is);
-//	}
+
 
 }

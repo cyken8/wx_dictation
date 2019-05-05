@@ -156,7 +156,6 @@
     <servlet-name>BdAipSpeechServlet</servlet-name>
     <url-pattern>/bdAipSpeech</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>WordWrongServlet</display-name>
@@ -166,5 +165,15 @@
   <servlet-mapping>
     <servlet-name>WordWrongServlet</servlet-name>
     <url-pattern>/wordWrong</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>HomeworkServlet</display-name>
+    <servlet-name>HomeworkServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.HomeworkServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HomeworkServlet</servlet-name>
+    <url-pattern>/homework</url-pattern>
   </servlet-mapping>
 </web-app>

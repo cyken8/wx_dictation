@@ -18,6 +18,9 @@ public interface WordService {
 
 	int delWordEx(List<String> wordIdList, String userid) throws Exception;
 
+	List<Word> getWordsByCid(String courseid) throws Exception;
+
+
 
 
 

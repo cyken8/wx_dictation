@@ -18,7 +18,7 @@ public class UserTwo {
 	private Date  birthday;	
 	
 	private String email;	
-	private UserType usertype;
+	private Role role;
 	private Organization org;
 	
 	private Grade grade;
@@ -70,12 +70,7 @@ public class UserTwo {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public UserType getUsertype() {
-		return usertype;
-	}
-	public void setUsertype(UserType usertype) {
-		this.usertype = usertype;
-	}
+
 	public Organization getOrg() {
 		return org;
 	}
@@ -117,6 +112,12 @@ public class UserTwo {
 	}
 	public void setState(String state) {
 		this.state = state;
+	}
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	

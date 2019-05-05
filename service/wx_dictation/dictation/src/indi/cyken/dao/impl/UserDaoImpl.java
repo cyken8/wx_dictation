@@ -29,7 +29,7 @@ import indi.cyken.domain.SClass;
 import indi.cyken.domain.Unit;
 import indi.cyken.domain.User;
 import indi.cyken.domain.UserTwo;
-import indi.cyken.domain.UserType;
+import indi.cyken.domain.Role;
 import indi.cyken.utils.DataSourceUtils;
 
 public class UserDaoImpl implements UserDao{
@@ -161,8 +161,8 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public UserTwo getUserInfoByUid(String userid) throws Exception {
 		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
-		String sql="SELECT * FROM t_user u,t_user_type ut,t_organization torg,t_grade tg,t_class tcl,t_province tp,t_city tci \r\n" + 
-				"WHERE userid=? AND u.state='1' AND u.usertypeid=ut.usertypeid \r\n" + 
+		String sql="SELECT * FROM t_user u,t_role ut,t_organization torg,t_grade tg,t_class tcl,t_province tp,t_city tci \r\n" + 
+				"WHERE userid=? AND u.state='1' AND u.roleid=ut.roleid \r\n" + 
 				"AND u.orgid=torg.orgid AND u.gradeid=tg.gradeid \r\n" + 
 				"AND u.classid=tcl.classid AND u.provinceid=tp.provinceid AND u.cityid=tci.cityid ;";
 		Map<String, Object> query = qr.query(sql, new MapHandler(), userid);
@@ -171,9 +171,9 @@ public class UserDaoImpl implements UserDao{
 		ConvertUtils.register(new DateConverter(null), java.util.Date.class);		//必须有这一句，获取的值有java中不识别的数据类型。如：java.sql.date，并不是java中的时间类型java.utils.date。
 		BeanUtils.populate(user, query);
 		
-		UserType usertype=new UserType();
-		BeanUtils.populate(usertype, query);
-		user.setUsertype(usertype);
+		Role role=new Role();
+		BeanUtils.populate(role, query);
+		user.setRole(role);
 		
 		Organization org=new Organization();		
 		BeanUtils.populate(org, query);

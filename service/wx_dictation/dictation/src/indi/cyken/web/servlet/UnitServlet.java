@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import indi.cyken.constant.FEIPCodeEnum;
 import indi.cyken.domain.Book;
 import indi.cyken.domain.Unit;
 import indi.cyken.service.BookService;
@@ -17,6 +18,7 @@ import indi.cyken.utils.BeanFactory;
 import indi.cyken.utils.JsonUtil;
 import indi.cyken.utils.WriteBackUtil;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
 /**
@@ -47,6 +49,43 @@ public class UnitServlet extends BaseServlet {
 				String json=JSONArray.fromObject(blist, config1).toString();
 				WriteBackUtil.WriteBackJsonStr(json, response);
 				return "success:根据bookid查询所有的单元成功";
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "fail:根据bookid查询所有的单元出现异常";
+
+		}
+		return "fail:根据bookid查询所有的单元失败";
+	} 
+	
+	
+	/**
+	 * 微信端根据bookid查询所有的单元
+	 */
+	public String WXGetAllUnitByBookId(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		//1.获取课本的id
+		String bookid=request.getParameter("bookid");
+		System.out.println("后端接收到的课本id: "+bookid);
+		//2.调用service
+		System.out.println("调用了UnitServlet中的 WXGetAllUnitByBookId方法");
+		UnitService bs = (UnitService) BeanFactory.getBean("UnitService");
+		List<Unit> blist = null;
+		JSONObject data=new JSONObject();
+
+		try {
+			blist = bs.getByBid(bookid);
+			if(blist!=null) {
+				JsonConfig config1 = new JsonConfig();
+				config1.setExcludes(new String[]{"unit"}); 
+				String jsonstr=JSONArray.fromObject(blist, config1).toString();
+				data.put("unitList", jsonstr);
+				WriteBackUtil.WriteBackJsonStr(1,FEIPCodeEnum.OK.getCode(),FEIPCodeEnum.OK.getMsg(),data,response);
+				return "success:根据bookid查询所有的单元成功";
+
+			}else {
+				WriteBackUtil.WriteBackJsonStr(0,FEIPCodeEnum.FAIL.getCode(),FEIPCodeEnum.FAIL.getMsg(),data,response);
 
 			}
 		} catch (Exception e) {

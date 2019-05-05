@@ -121,6 +121,36 @@ public class WordDaoImpl implements WordDao {
 		
 	}
 
+	
+	/**
+	 * 根据课时获取所有标准单词
+	 */
+	@Override
+	public List<Word> getWordsByCid(String courseid) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="SELECT * FROM t_word  WHERE cometypeid= ? AND courseid=?";
+		
+		List<Map<String, Object>> query = qr.query(sql, new MapListHandler(), DBTableField.WORD_COMETYPE_STANDAR,courseid);
+		List<Word> list=new LinkedList<>();
+		for (Map<String, Object> map : query) {
+			WordLengType wl=new WordLengType();
+			BeanUtils.populate(wl, map);
+			WordComeType wc=new WordComeType();
+			BeanUtils.populate(wc, map);
+			Course course=new Course();
+			BeanUtils.populate(course, map);
+			
+			Word word=new Word();
+			BeanUtils.populate(word, map);
+			word.setLengtype(wl);
+			word.setCometype(wc);
+			word.setCourse(course);
+			
+			list.add(word);
+		}
+		return list;
+	}
+
 
 	
 

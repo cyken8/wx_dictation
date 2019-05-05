@@ -92,7 +92,7 @@ public class WordServlet extends BaseServlet {
 		List<Word> wlist=ws.getWordEx(userid,courseid);
 		JSONObject jsonObj=new JSONObject();
 
-		if(wlist!=null&&wlist.size()>0) {
+		if(wlist!=null) {
 			String jsonstr = JsonUtil.list2json(wlist);
 			jsonObj.put("code", FEIPCodeEnum.OK.getCode());
 			jsonObj.put("state", 1);
@@ -119,7 +119,6 @@ public class WordServlet extends BaseServlet {
 	 */
 	public String WXAddWordEx(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//1.获取userid和wordlist
-		System.out.println("调用了WordServlet 中的 WXAddWordEx ");
 		String userid = request.getParameter("userid");
 		String courseid=request.getParameter("courseid"); 
 		String wordListJsonstr = request.getParameter("wordListJsonstr");//[{wordtext:xxx},{wordtext:xxx}]
@@ -134,7 +133,7 @@ public class WordServlet extends BaseServlet {
 		WordService ws=(WordService) BeanFactory.getBean("WordService");
 		List<Word> wordList=WordUtil.getWordByText(userid,courseid,list);
 		if(wordList==null) {
-			System.out.println("更加文字生成单词实体失败");
+			System.out.println("根据文字生成单词实体失败");
 			return "fail";
 		}
 		
@@ -191,6 +190,39 @@ public class WordServlet extends BaseServlet {
 		}
 		
 	}
+	
+	
+	/**
+	 * 根据和课时id获取课时下所有标准单词
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public String WXGetAllWordByCid(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		//1.获取userid和courseid
+		System.out.println("调用了WordServlet 中的 WXGetAllWordByCid ");
+		String courseid = request.getParameter("courseid");
+		System.out.println(" courseid = "+courseid);
+		
+		//2.调用service 通过oid 返回值:order
+		WordService ws=(WordService) BeanFactory.getBean("WordService");
+		List<Word> wlist=ws.getWordsByCid(courseid);
+		JSONObject data=new JSONObject();
+
+		if(wlist!=null) {
+			String jsonstr = JsonUtil.list2json(wlist);
+			data.put("wordList",jsonstr );
+			WriteBackUtil.WriteBackJsonStr(1,FEIPCodeEnum.OK.getCode(),FEIPCodeEnum.OK.getMsg(),data, response);
+			return "success:获取课时下所有单词成功";
+		}else {
+			WriteBackUtil.WriteBackJsonStr(0,FEIPCodeEnum.FAIL.getCode(),FEIPCodeEnum.FAIL.getMsg(),data, response);
+			return "fail:获取课时下所有单词失败";
+		}
+
+		
+	}
+	
 
 
 	

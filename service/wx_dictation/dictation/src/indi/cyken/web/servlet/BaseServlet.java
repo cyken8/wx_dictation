@@ -31,10 +31,11 @@ public class BaseServlet extends HttpServlet {
 			// 3.获取方法对象
 			Method method = clazz.getMethod(m, HttpServletRequest.class, HttpServletResponse.class);
 			
+			System.out.println("调用 "+ m+"模块中的 "+method+"方法");
+			
 			// 4.让方法执行 返回值为请求转发的路径
 			String s=(String) method.invoke(this, request,response);//相当于 userservlet.add(request,response)
 			
-			System.out.println("返回前端的字符串:"+s);
 			// 5.判断s是否为空
 //			if(s!=null){
 //				request.getRequestDispatcher(s).forward(request, response);

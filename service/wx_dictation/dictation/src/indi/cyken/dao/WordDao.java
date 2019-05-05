@@ -16,6 +16,8 @@ public interface WordDao {
 
 	void delWordEx(String wordid, String userid) throws Exception;
 
+	List<Word> getWordsByCid(String courseid) throws Exception;
+
 
 
 }

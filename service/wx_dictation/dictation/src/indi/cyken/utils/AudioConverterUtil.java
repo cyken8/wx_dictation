@@ -5,8 +5,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
+
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -47,28 +48,6 @@ public class AudioConverterUtil {
 	
 	
 	/**
-	 * WAV转PCM文件
-	 * @param wavfilepath wav文件路径
-	 * @param pcmfilepath pcm要保存的文件路径及文件名
-	 * @return
-	 */
-	public static String convertAudioFiles(String wavfilepath,String pcmfilepath){
-		FileInputStream fileInputStream;
-		FileOutputStream fileOutputStream;
-		try {
-			fileInputStream = new FileInputStream(wavfilepath);
-			fileOutputStream = new FileOutputStream(pcmfilepath);
-			byte[] wavbyte = InputStreamToByte(fileInputStream);
-			byte[] pcmbyte = Arrays.copyOfRange(wavbyte, 44, wavbyte.length);
-			fileOutputStream.write(pcmbyte);
-			IOUtils.closeQuietly(fileInputStream);
-			IOUtils.closeQuietly(fileOutputStream);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return pcmfilepath;
-	}
-	/**
 	 * 输入流转byte二进制数据
 	 * @param fis
 	 * @return
@@ -96,4 +75,26 @@ public class AudioConverterUtil {
 		return data;
 
 	}
+	
+	   /**
+     * @Description MP3转换pcm
+     * @param mp3Stream
+     *            原始文件流
+     * @return 转换后的二进制
+     * @throws Exception
+     * @author liuyang
+     * @blog http://www.pqsky.me
+     * @date 2018年1月30日
+     */
+    public byte[] mp3Convertpcm(InputStream mp3Stream) throws Exception {
+        // 原MP3文件转AudioInputStream
+        AudioInputStream mp3audioStream = AudioSystem.getAudioInputStream(mp3Stream);
+        // 将AudioInputStream MP3文件 转换为PCM AudioInputStream
+        AudioInputStream pcmaudioStream = AudioSystem.getAudioInputStream(AudioFormat.Encoding.PCM_SIGNED,
+                mp3audioStream);
+        byte[] pcmBytes = IOUtils.toByteArray(pcmaudioStream);
+        pcmaudioStream.close();
+        mp3audioStream.close();
+        return pcmBytes;
+    }
 }

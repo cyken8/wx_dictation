@@ -7,12 +7,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import indi.cyken.constant.FEIPCodeEnum;
 import indi.cyken.domain.Book;
 import indi.cyken.domain.PageBean;
 import indi.cyken.service.BookService;
 import indi.cyken.utils.BeanFactory;
 import indi.cyken.utils.JsonUtil;
 import indi.cyken.utils.WriteBackUtil;
+import net.sf.json.JSONObject;
 
 /**
  * 课本相关servlet
@@ -116,10 +118,11 @@ public class BookServlet extends BaseServlet {
 			blist = bs.getByCategoryId(categoryid);
 			if(blist!=null&& blist.size()>0) {
 				// 2.将返回值转成json格式 返回到页面上
-				//request.setAttribute("blist", blist);
 				String json = JsonUtil.list2json(blist);
 				//3.写回去
-				WriteBackUtil.WriteBackJsonStr(json, response);
+				JSONObject data=new JSONObject();
+				data.put("categoryDetail", json);
+				WriteBackUtil.WriteBackJsonStr(1, FEIPCodeEnum.OK.getCode(), FEIPCodeEnum.OK.getMsg(), data, response);
 				return "success:根据categoryid获取课本成功";
 			}else {
 				return "success:根据categoryid获取课本失败";
@@ -143,6 +146,37 @@ public class BookServlet extends BaseServlet {
 	public String  WXGetBookByBookId(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		return getById(request,response);
+	}
+	
+	
+	/**
+	 * 微信端通过获取课本信息
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public String  WXGetAllBook(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("调用了BookServlet  WXGetAllBook方法");
+		BookService bs = (BookService) BeanFactory.getBean("BookService");
+		List<Book> blist = null;
+		JSONObject data=new JSONObject();
+		try {
+			blist = bs.findAll();
+			if(blist!=null) {
+				String jsonstr=JsonUtil.list2json(blist);
+				data.put("bookList", jsonstr);
+				WriteBackUtil.WriteBackJsonStr(1, FEIPCodeEnum.OK.getCode(), FEIPCodeEnum.OK.getMsg(), data, response);
+			}else {
+				WriteBackUtil.WriteBackJsonStr(0, FEIPCodeEnum.FAIL.getCode(), FEIPCodeEnum.FAIL.getMsg(), data, response);
+
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 	
 	

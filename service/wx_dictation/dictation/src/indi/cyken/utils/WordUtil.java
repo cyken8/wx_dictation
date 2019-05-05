@@ -33,14 +33,11 @@ public class WordUtil {
 				return null;
 			}
 			//2.获取录音文件保存路径
-			String path="E:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\vocabulary";
+			//String path=ResourceBundle.getBundle("resourcepath").getString("WordPath");
+			String path=OSResourcePathUtil.getWordPath();
 			String fileName=wordtext+".mp3";
-			String fullPath=path+"\\"+fileName;
-//			boolean createFile = FileUtil.createFile(path, fileName);	//path后不能有斜杠
-//			if(!createFile) {
-//				System.out.println("创建文件失败");
-//				return null;
-//			}
+			String fullPath=path+System.getProperty("file.separator")+fileName;
+
 			//3.文字合成录音
 			boolean ret = SpeechUtil.SpeechSynthesizer(wordtext, fullPath);
 			System.out.println("文字合成录音返回的成功与否结果"+ret);
@@ -58,7 +55,8 @@ public class WordUtil {
 			String cometypeid=DBTableField.WORD_COMETYPE_EX;
 			cometype.setCometypeid(cometypeid);
 			String wordid=Constant.PREFIX_WORD+UUIDUtils.getCode();
-			String voiceurl="http://localhost:8080/vocabulary/"+fileName;
+			String wordPathVirtual=OSResourcePathUtil.getWordPathVirtual();
+			String voiceurl=wordPathVirtual+fileName;
 			String weid=Constant.PREFIX_MAP_WORDEX_USER+UUIDUtils.getCode();
 			
 			Word word=new Word();
