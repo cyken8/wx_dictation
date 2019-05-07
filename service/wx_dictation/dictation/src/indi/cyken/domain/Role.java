@@ -8,6 +8,19 @@ package indi.cyken.domain;
 public class Role {
 	private String roleid;
 	private String rolename;
+	
+    //保留此默认的构造方法
+     public Role(){
+         
+     }
+     public Role(String roleid,String rolename) {
+    	 this.roleid=roleid;
+    	 this.rolename=rolename;
+     }
+     public Role(String roleid) {
+    	 this.roleid=roleid;
+     }
+	
 	public String getRoleid() {
 		return roleid;
 	}

@@ -176,4 +176,14 @@
     <servlet-name>HomeworkServlet</servlet-name>
     <url-pattern>/homework</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TestServlet</display-name>
+    <servlet-name>TestServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.TestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TestServlet</servlet-name>
+    <url-pattern>/test</url-pattern>
+  </servlet-mapping>
 </web-app>

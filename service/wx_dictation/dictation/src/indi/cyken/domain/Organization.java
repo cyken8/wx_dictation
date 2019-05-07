@@ -11,7 +11,24 @@ public class Organization {
 	private String orgname;
 	private City 	city;
 	
+	public Organization() {
+		
+	}
 	
+	public Organization(String orgid, String orgname, City city) {
+		super();
+		this.orgid = orgid;
+		this.orgname = orgname;
+		this.city = city;
+	}
+
+	public Organization(String orgid) {
+		super();
+		this.orgid = orgid;
+	}
+	
+
+
 	public String getOrgid() {
 		return orgid;
 	}

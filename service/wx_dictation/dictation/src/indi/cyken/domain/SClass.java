@@ -10,6 +10,23 @@ public class SClass {
 	private String classid;
 	private String classname;
 	private Grade grade;
+	
+	public SClass() {
+		
+	}
+	
+	public SClass(String classid) {
+		super();
+		this.classid = classid;
+	}
+
+	public SClass(String classid, String classname, Grade grade) {
+		super();
+		this.classid = classid;
+		this.classname = classname;
+		this.grade = grade;
+	}
+
 	public String getClassid() {
 		return classid;
 	}

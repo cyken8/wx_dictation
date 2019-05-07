@@ -8,6 +8,18 @@ package indi.cyken.domain;
 public class Province {
 	private String provinceid;
 	private String provincename;
+	
+	public Province() {
+		
+	}
+	
+	
+	public Province(String provinceid) {
+		super();
+		this.provinceid = provinceid;
+	}
+
+
 	public String getProvinceid() {
 		return provinceid;
 	}

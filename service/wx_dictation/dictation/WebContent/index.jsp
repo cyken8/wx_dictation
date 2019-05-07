@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-nihao
-<%-- 	<jsp:forward page="http://localhost:8080/layui/src/views/index.html"></jsp:forward>
- --%></body>
+ 词汇听写系统后台
+</body>
 </html>

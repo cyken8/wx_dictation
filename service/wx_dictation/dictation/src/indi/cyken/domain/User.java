@@ -9,22 +9,58 @@ public class User {
 	private String password;
 	
 	private String avatar;	
-	private String state;//激活状态  1:激活    0:未激活
-	private String usertypeid;
-	
-	private String orgid;
-	private String gradeid;
-	private String classid;
-	
+	private String sex;
 	private Date  birthday;	
-	private String  sex;	
+	
 	private String email;	
+	private Role role;
+	private Organization org;
 	
-	private String provinceid;
-	private String  cityid;
+	private Grade grade;
+	private SClass sclass;
+	private Province province;
+	
+	private City city;
 	private String open_id;
+	private String state;
 	
+	public User() {
+		
+	}
+
 	
+	public User(String userid, String username, String password, String avatar, String sex, Date birthday, String email,
+			Role role, Organization org, Grade grade, SClass sclass, Province province, City city, String open_id,
+			String state) {
+		super();
+		this.userid = userid;
+		this.username = username;
+		this.password = password;
+		this.avatar = avatar;
+		this.sex = sex;
+		this.birthday = birthday;
+		this.email = email;
+		this.role = role;
+		this.org = org;
+		this.grade = grade;
+		this.sclass = sclass;
+		this.province = province;
+		this.city = city;
+		this.open_id = open_id;
+		this.state = state;
+	}
+
+	public User(Role role, Organization org, Grade grade, SClass sclass, Province province, City city) {
+		super();
+		this.role = role;
+		this.org = org;
+		this.grade = grade;
+		this.sclass = sclass;
+		this.province = province;
+		this.city = city;
+	}
+
+
 	public String getUserid() {
 		return userid;
 	}
@@ -49,35 +85,11 @@ public class User {
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
-	public String getState() {
-		return state;
+	public String getSex() {
+		return sex;
 	}
-	public void setState(String state) {
-		this.state = state;
-	}
-	public String getUsertypeid() {
-		return usertypeid;
-	}
-	public void setUsertypeid(String usertypeid) {
-		this.usertypeid = usertypeid;
-	}
-	public String getOrgid() {
-		return orgid;
-	}
-	public void setOrgid(String orgid) {
-		this.orgid = orgid;
-	}
-	public String getGradeid() {
-		return gradeid;
-	}
-	public void setGradeid(String gradeid) {
-		this.gradeid = gradeid;
-	}
-	public String getClassid() {
-		return classid;
-	}
-	public void setClassid(String classid) {
-		this.classid = classid;
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 	public Date getBirthday() {
 		return birthday;
@@ -85,29 +97,42 @@ public class User {
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
-	public String getSex() {
-		return sex;
-	}
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getProvinceid() {
-		return provinceid;
+
+	public Organization getOrg() {
+		return org;
 	}
-	public void setProvinceid(String provinceid) {
-		this.provinceid = provinceid;
+	public void setOrg(Organization org) {
+		this.org = org;
 	}
-	public String getCityid() {
-		return cityid;
+	public Grade getGrade() {
+		return grade;
 	}
-	public void setCityid(String cityid) {
-		this.cityid = cityid;
+	public void setGrade(Grade grade) {
+		this.grade = grade;
+	}
+	public SClass getSclass() {
+		return sclass;
+	}
+	public void setSclass(SClass sclass) {
+		this.sclass = sclass;
+	}
+	public Province getProvince() {
+		return province;
+	}
+	public void setProvince(Province province) {
+		this.province = province;
+	}
+	public City getCity() {
+		return city;
+	}
+	public void setCity(City city) {
+		this.city = city;
 	}
 	public String getOpen_id() {
 		return open_id;
@@ -115,8 +140,22 @@ public class User {
 	public void setOpen_id(String open_id) {
 		this.open_id = open_id;
 	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
 
 	
+	
+
 }
 
 

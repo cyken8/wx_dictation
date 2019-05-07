@@ -1,6 +1,8 @@
 package indi.cyken.service.impl;
 
-import indi.cyken.dao.SessionDao;
+import java.util.List;
+
+
 import indi.cyken.dao.UserDao;
 import indi.cyken.dao.impl.UserDaoImpl;
 import indi.cyken.domain.User;
@@ -10,24 +12,8 @@ import indi.cyken.utils.BeanFactory;
 
 public class UserServiceImpl implements UserService {
 
-	/**
-	 * 注册教师身份
-	 */
-	@Override
-	public void registTeacher(User user)  throws Exception{
-		UserDao dao=new UserDaoImpl();
-		int ret=dao.registTeacher(user);
 
-	}
 
-	/**
-	 * 教师网页版登录
-	 */
-	@Override
-	public User login(String username, String password) throws Exception {
-		UserDao dao=new UserDaoImpl();
-		return dao.getByUsernameAndPwd(username,password);
-	}
 	
 	/**
 	 * 通过用户id查询用户信息
@@ -86,6 +72,34 @@ public class UserServiceImpl implements UserService {
 		UserDao ud=(UserDao) BeanFactory.getBean("UserDao");
 		// TODO Auto-generated method stub
 		return ud.getUserInfoByUid(userid);
+	}
+
+	/**
+	 * 获取所有用户信息
+	 */
+	@Override
+	public List<User> getAllUser() throws Exception {
+		UserDao ud=(UserDao) BeanFactory.getBean("UserDao");
+		// TODO Auto-generated method stub
+		return ud.getAllUser();
+	}
+
+
+	@Override
+	public User login(String username, String password) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * 根据用户id 删除一个用户
+	 */
+	@Override
+	public int delOneUserByUid(String userid) throws Exception {
+		UserDao ud=(UserDao) BeanFactory.getBean("UserDao");
+		// TODO Auto-generated method stub
+		return ud.delOneUserByUid(userid);
 	}
 
 	

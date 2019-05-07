@@ -8,6 +8,18 @@ package indi.cyken.domain;
 public class Grade {
 	private String gradeid;
 	private String gradename;
+	
+	public Grade() {
+		
+	}
+	
+	
+	public Grade(String gradeid) {
+		super();
+		this.gradeid = gradeid;
+	}
+
+
 	public String getGradeid() {
 		return gradeid;
 	}

@@ -9,6 +9,26 @@ public class City {
 	private String cityid;
 	private String cityname;
 	private Province province;
+	
+	public City() {
+		
+	}
+	
+	
+	public City(String cityid, String cityname, Province province) {
+		super();
+		this.cityid = cityid;
+		this.cityname = cityname;
+		this.province = province;
+	}
+
+
+	public City(String cityid) {
+		super();
+		this.cityid = cityid;
+	}
+
+
 	public String getCityid() {
 		return cityid;
 	}

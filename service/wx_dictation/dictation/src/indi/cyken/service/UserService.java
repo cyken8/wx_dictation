@@ -1,11 +1,13 @@
 package indi.cyken.service;
 
+import java.util.List;
+
 import indi.cyken.domain.User;
 import indi.cyken.domain.UserTwo;
 
 public interface UserService {
 
-	void registTeacher(User user) throws Exception;
+	
 
 	User login(String username, String password)  throws Exception;
 
@@ -20,6 +22,10 @@ public interface UserService {
 	UserTwo queryByUidAndPass(String userid, String password) throws Exception;
 
 	UserTwo getUserInfoByUid(String userid) throws Exception;
+
+	List<User> getAllUser()throws Exception;
+
+	int delOneUserByUid(String userid)throws Exception;
 
 	
 

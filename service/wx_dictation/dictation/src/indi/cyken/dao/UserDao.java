@@ -1,11 +1,13 @@
 package indi.cyken.dao;
 
+import java.util.List;
+
 import indi.cyken.domain.User;
 import indi.cyken.domain.UserTwo;
 
 public interface UserDao {
 
-	int registTeacher(User user) throws Exception;
+	
 
 	User getByUsernameAndPwd(String username, String password) throws Exception;
 
@@ -20,6 +22,10 @@ public interface UserDao {
 	UserTwo queryByUidAndPass(String userid, String password) throws Exception;
 
 	UserTwo getUserInfoByUid(String userid) throws Exception;
+
+	List<User> getAllUser()throws Exception;
+
+	int delOneUserByUid(String userid) throws Exception;
 
 
 }

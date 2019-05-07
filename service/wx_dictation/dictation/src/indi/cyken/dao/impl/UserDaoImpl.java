@@ -1,7 +1,6 @@
 package indi.cyken.dao.impl;
 
-import java.sql.SQLException;
-import java.util.Date;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -15,18 +14,12 @@ import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 
 import indi.cyken.dao.UserDao;
-import indi.cyken.domain.Book;
-import indi.cyken.domain.BookLanguage;
-import indi.cyken.domain.BookType;
-import indi.cyken.domain.BookVersion;
-import indi.cyken.domain.Category;
+
 import indi.cyken.domain.City;
-import indi.cyken.domain.Course;
 import indi.cyken.domain.Grade;
 import indi.cyken.domain.Organization;
 import indi.cyken.domain.Province;
 import indi.cyken.domain.SClass;
-import indi.cyken.domain.Unit;
 import indi.cyken.domain.User;
 import indi.cyken.domain.UserTwo;
 import indi.cyken.domain.Role;
@@ -34,36 +27,7 @@ import indi.cyken.utils.DataSourceUtils;
 
 public class UserDaoImpl implements UserDao{
 
-	/**
-	 * 注册教师省份
-	 * @return 
-	 * @throws SQLException 
-	 */
-	@Override
-	public int registTeacher(User user) throws SQLException {
-		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
-		System.out.println("QueryRuner: "+qr);
-		String sql="insert into t_user values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-		int ret = qr.update(sql,user.getUserid(),
-				user.getUsername(),
-				user.getPassword(),
-				user.getAvatar(),
-				user.getState(),
-				user.getUsertypeid(),
-				user.getOrgid(),
-				user.getGradeid(),
-				user.getClassid(),
-				user.getBirthday(),
-				user.getSex(),
-				user.getEmail(),
-				user.getProvinceid(),
-				user.getCityid(),
-				user.getOpen_id());
-		
-		return ret;
-
-		
-	}
+	
 
 	/**
 	 * 教师网页登录
@@ -109,17 +73,17 @@ public class UserDaoImpl implements UserDao{
 				user.getUsername(),
 				user.getPassword(),
 				user.getAvatar(),
-				user.getState(),
-				user.getUsertypeid(),
-				user.getOrgid(),
-				user.getGradeid(),
-				user.getClassid(),
-				user.getBirthday(),
 				user.getSex(),
+				user.getBirthday(),
 				user.getEmail(),
-				user.getProvinceid(),
-				user.getCityid(),
-				user.getOpen_id());
+				user.getRole().getRoleid(),
+				user.getOrg().getOrgid(),
+				user.getGrade().getGradeid(),
+				user.getSclass().getClassid(),
+				user.getProvince().getProvinceid(),
+				user.getCity().getCityid(),
+				user.getOpen_id(),
+				user.getState());
 		
 		return ret;
 	}
@@ -197,6 +161,59 @@ public class UserDaoImpl implements UserDao{
 		
 		return user;
 
+	}
+
+
+	/**
+	 * 获取所有用户信息
+	 */
+	@Override
+	public List<User> getAllUser() throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="SELECT * FROM t_user u ,t_role r,t_organization org,t_grade g,t_class cla,t_province pr,t_city c \r\n" + 
+				"WHERE u.roleid=r.roleid AND u.orgid=org.orgid AND u.gradeid=g.gradeid \r\n" + 
+				"AND u.classid=cla.classid AND u.provinceid=pr.provinceid AND u.cityid=c.cityid;";
+		
+		List<Map<String, Object>> query = qr.query(sql, new MapListHandler());
+		List<User> list=new LinkedList<>();
+		for (Map<String, Object> map : query) {
+			Role role=new Role();
+			BeanUtils.populate(role, map);
+			
+			Organization org=new Organization();
+			BeanUtils.populate(org, map);
+			
+			Grade grade=new Grade();
+			BeanUtils.populate(grade, map);
+
+			SClass sclass=new SClass();
+			BeanUtils.populate(sclass, map);
+
+			Province province=new Province();
+			BeanUtils.populate(province, map);
+
+			City city=new City();
+			BeanUtils.populate(city, map);
+
+			User user =new User(role,org,grade,sclass,province,city);
+			BeanUtils.populate(user, map);
+			
+			list.add(user);
+		}
+		return list;
+		
+	}
+
+
+	/**
+	 * 根据用户id删除一个用户
+	 */
+	@Override
+	public int delOneUserByUid(String userid) throws Exception {
+		// TODO Auto-generated method stub
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="delete from t_user where userid=?";
+		return qr.update(sql, userid);
 	}
 	
 	
