@@ -1,36 +1,28 @@
 package indi.cyken.web.servlet;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.io.PrintWriter;
+
+
+import java.util.LinkedList;
+import java.util.List;
+
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.ConvertUtils;
 
-import indi.cyken.constant.Constant;
 import indi.cyken.constant.FEIPCodeEnum;
-import indi.cyken.converter.MyConventer;
 import indi.cyken.domain.User;
 import indi.cyken.domain.UserTwo;
-import indi.cyken.service.BookService;
-import indi.cyken.service.SessionService;
+import indi.cyken.dto.Result;
+import indi.cyken.dto.User.UserDto;
 import indi.cyken.service.UserService;
-import indi.cyken.service.impl.UserServiceImpl;
-import indi.cyken.utils.AesCbcUtil;
 import indi.cyken.utils.BeanFactory;
-import indi.cyken.utils.HttpRequest;
 import indi.cyken.utils.JsonUtil;
-import indi.cyken.utils.MD5Utils;
-import indi.cyken.utils.UUIDUtils;
 import indi.cyken.utils.WriteBackUtil;
 import net.sf.json.JSONObject;
 
@@ -43,40 +35,6 @@ public class UserServlet extends BaseServlet {
 
 
 	
-	/**
-	 * 通过sessionId获取用户信息
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public String getBySessionId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		System.out.println("调用了getBySessionId Servlet");
-		String sessionId=request.getParameter("sessionId");
-		System.out.println("接收到的session_key: "+ sessionId);
-		UserService us = (UserService) BeanFactory.getBean("UserService");
-
-		try {
-			User user = us.getUserBySessionId(sessionId);
-			if(user!=null&&user.getUserid().length()>0) {
-				JSONObject json=new JSONObject();
-				json.put("data", user);
-				response.getWriter().write(JsonUtil.object2json(json));
-				return "succes:成功根据sessionId获取用户信息";
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("fail:获取用户信息失败");
-		}
-	
-		return "fail:获取用户信息失败";
-	}
-	
-	
-	//////////////////////////////////////////////修改登录版本之后///////////////////////
 	
 	/**
 	 * 微信端用户登录
@@ -93,7 +51,7 @@ public class UserServlet extends BaseServlet {
 		
 		//2.调用serive完成登录操作 返回user
 		UserService us = (UserService) BeanFactory.getBean("UserService");
-		UserTwo user=us.queryByUidAndPass(userid,password);
+		User user=us.queryByUidAndPass(userid,password);
 		JSONObject data=new JSONObject();
 		if(user!=null) {
 			data.put("isAuthorized", true);
@@ -109,10 +67,8 @@ public class UserServlet extends BaseServlet {
 	}	
 	
 	
-	
-	
 	/**
-	 * 通过sessionId获取用户信息
+	 * 通过userid获取用户信息
 	 * @param request
 	 * @param response
 	 * @return
@@ -121,7 +77,6 @@ public class UserServlet extends BaseServlet {
 	 */
 	public String getUserInfoByUid(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		System.out.println("调用了getUserInfoByUid");
 		String userid=request.getParameter("userid");
 		System.out.println("接收到的userid: "+ userid);
 		UserService us = (UserService) BeanFactory.getBean("UserService");
@@ -146,6 +101,51 @@ public class UserServlet extends BaseServlet {
 	}
 	
 	
+	/**
+	 * 通过classid获取班级下所有的学生
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public String WebGetAllStudentByClid(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String classid=request.getParameter("classid");
+		System.out.println("接收到的classid: "+ classid);
+		UserService us = (UserService) BeanFactory.getBean("UserService");
+		List<User> ul = us.getAllStudentByClid(classid);
+		List<UserDto> list = new LinkedList<>();
+		Result result = new Result(0, "获取所有用户成功");
+		JSONObject data = new JSONObject();
+		if (ul != null) {
+			for (int i = 0; i < ul.size(); i++) {
+				UserDto userDto = new UserDto();
+				User userDao = ul.get(i);
+				// BeanCopyUtil.copyPropertiesObj2Item(userDto, userDao);
+				BeanUtils.copyProperties(userDto, userDao);
+				userDto.setRole(userDao.getRole().getRolename());
+				userDto.setProvince(userDao.getProvince().getProvincename());
+				userDto.setCity(userDao.getCity().getCityname());
+				userDto.setOrg(userDao.getOrg().getOrgname());
+				userDto.setGrade(userDao.getGrade().getGradename());
+				userDto.setSclass(userDao.getSclass().getClassname());
+				list.add(userDto);
+			}
+
+			data.put("list", list);
+			result.setResult("data", data);
+			// 4.写回网页端
+			WriteBackUtil.WriteBackJsonStr(result, response);
+		} else {
+			result.setErrorNo(1);
+			WriteBackUtil.WriteBackJsonStr(result, response);
+		}
+
+		return null;
+
+
+	}
 	
 	
 	

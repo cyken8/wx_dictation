@@ -20,6 +20,37 @@ public class Book implements Serializable{
 	
 	private String status;//状态  1:启用    0:删除
 	private Category bookCategory;
+	
+	public Book() {
+		
+	}
+	
+	public Book(String bookid) {
+		super();
+		this.bookid = bookid;
+	}
+
+	public Book(String bookid, String bookname, BookVersion version, BookLanguage language, BookType booktype,
+			Category bookCategory,String cover, String status ) {
+		super();
+		this.bookid = bookid;
+		this.bookname = bookname;
+		this.version = version;
+		this.language = language;
+		this.booktype = booktype;
+		this.cover = cover;
+		this.status = status;
+		this.bookCategory = bookCategory;
+	}
+	
+	public Book(BookVersion version, BookLanguage language, BookType booktype, Category bookCategory) {
+		super();
+		this.version = version;
+		this.language = language;
+		this.booktype = booktype;
+		this.bookCategory = bookCategory;
+	}
+
 	public String getBookid() {
 		return bookid;
 	}

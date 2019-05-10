@@ -18,6 +18,11 @@ public interface WordDao {
 
 	List<Word> getWordsByCid(String courseid) throws Exception;
 
+	int addWordStandard(Word word) throws Exception;
+
+	int delWordStandard(String wordid) throws Exception;
+
+	List<Word> getWordStandardByCid(String courseid)throws Exception;
 
 
 }

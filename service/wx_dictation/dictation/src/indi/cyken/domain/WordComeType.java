@@ -4,6 +4,17 @@ public class WordComeType {
 
 	private String cometypeid;
 	private String cometypename;
+	public WordComeType() {
+		
+	}
+	
+	
+	public WordComeType(String cometypeid) {
+		super();
+		this.cometypeid = cometypeid;
+	}
+
+
 	public String getCometypeid() {
 		return cometypeid;
 	}

@@ -20,6 +20,12 @@ public interface WordService {
 
 	List<Word> getWordsByCid(String courseid) throws Exception;
 
+	int addWordStandard(List<Word> wlist) throws Exception;
+
+	int delWordStandard(String wordid) throws Exception;
+
+	List<Word> getWordStandardByCid(String courseid)throws Exception;
+
 
 
 

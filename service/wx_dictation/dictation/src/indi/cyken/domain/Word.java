@@ -8,6 +8,24 @@ public class Word {
 	private Course course;	//所属课时
 	private WordLengType lengtype;		//长度类别
 	private WordComeType cometype;		//来源类别
+	
+	public Word() {
+		
+	}
+	
+	
+	public Word(String wordid, String wordtext, String voiceurl, Course course, WordLengType lengtype,
+			WordComeType cometype) {
+		super();
+		this.wordid = wordid;
+		this.wordtext = wordtext;
+		this.voiceurl = voiceurl;
+		this.course = course;
+		this.lengtype = lengtype;
+		this.cometype = cometype;
+	}
+
+
 	public String getWordid() {
 		return wordid;
 	}

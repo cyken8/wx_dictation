@@ -8,6 +8,18 @@ package indi.cyken.domain;
 public class BookVersion {
 	private String versionid;
 	private String versionname;
+	
+	public BookVersion() {
+		
+	}
+	
+	
+	public BookVersion(String versionid) {
+		super();
+		this.versionid = versionid;
+	}
+
+
 	public String getVersionid() {
 		return versionid;
 	}

@@ -29,4 +29,22 @@ public class CourseServiceImpl implements CourseService {
 		return cdao.getBookLangByCourseid(courseId);
 	}
 
+	/**
+	 * 添加一个课时
+	 */
+	@Override
+	public int addOneCourse(Course course) throws Exception {
+		CourseDao cdao=(CourseDao) BeanFactory.getBean("CourseDao");
+		return cdao.addOneCourse(course);
+	}
+
+	/**
+	 * 删除一个课时
+	 */
+	@Override
+	public int delOneCourse(String courseid) throws Exception {
+		CourseDao cdao=(CourseDao) BeanFactory.getBean("CourseDao");
+		return cdao.delOneCourse(courseid);
+	}
+
 }

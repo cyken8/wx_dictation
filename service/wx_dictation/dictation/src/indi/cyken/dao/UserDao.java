@@ -19,13 +19,15 @@ public interface UserDao {
 
 	User getUserBySessionId(String sessionId) throws Exception;
 
-	UserTwo queryByUidAndPass(String userid, String password) throws Exception;
+	User queryByUidAndPass(String userid, String password) throws Exception;
 
 	UserTwo getUserInfoByUid(String userid) throws Exception;
 
 	List<User> getAllUser()throws Exception;
 
 	int delOneUserByUid(String userid) throws Exception;
+
+	List<User> getAllStudentByClid(String classid) throws Exception;
 
 
 }

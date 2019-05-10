@@ -3,7 +3,6 @@ package indi.cyken.service;
 import java.util.List;
 
 import indi.cyken.domain.Book;
-import indi.cyken.domain.Collection;
 import indi.cyken.domain.PageBean;
 
 public interface BookService {
@@ -15,6 +14,10 @@ public interface BookService {
 	PageBean<Book> findByPage(int currPage, int pageSize, String cid) throws Exception;
 
 	List<Book> getByCategoryId(String categoryid) throws Exception;
+
+	int addOneBook(Book book) throws Exception;
+
+	int delOneBook(String bookid)throws Exception;
 
 
 }

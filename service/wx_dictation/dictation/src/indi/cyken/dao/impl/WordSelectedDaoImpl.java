@@ -28,7 +28,7 @@ public class WordSelectedDaoImpl implements WordSelectedDao{
 				"UNION \r\n" + 
 				"SELECT w2.wordid,w2.wordtext,w2.voiceurl,w2.lengtypeid,w2.cometypeid,w2.courseid FROM t_word w2,t_word_ex we,t_word_userselect wu2 WHERE wu2.userid=? and we.userid=? AND we.wordid=w2.wordid AND wu2.wordid=we.wordid AND w2.courseid=?; ";
 		
-		List<Map<String, Object>> query = qr.query(sql, new MapListHandler(),userid, DBTableField.WORD_COMETYPE_STANDAR,courseid,userid,userid,courseid);
+		List<Map<String, Object>> query = qr.query(sql, new MapListHandler(),userid, DBTableField.WORD_COMETYPE_STANDARD,courseid,userid,userid,courseid);
 		List<Word> list=new LinkedList<>();
 		for (Map<String, Object> map : query) {
 			WordLengType wl=new WordLengType();

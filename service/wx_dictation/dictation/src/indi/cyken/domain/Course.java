@@ -10,6 +10,25 @@ public class Course {
 	private String courseid;
 	private String coursename;
 	private Unit unit;
+	
+	public Course() {
+		
+	}
+	
+	public Course(String courseid, String coursename, Unit unit) {
+		super();
+		this.courseid = courseid;
+		this.coursename = coursename;
+		this.unit = unit;
+	}
+	
+
+
+	public Course(String courseid) {
+		super();
+		this.courseid = courseid;
+	}
+
 	public String getCourseid() {
 		return courseid;
 	}

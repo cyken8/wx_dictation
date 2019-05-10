@@ -13,6 +13,7 @@
 	<bean id="ScoreService" class="indi.cyken.service.impl.ScoreServiceImpl"></bean>
 	<bean id="WordWrongService" class="indi.cyken.service.impl.WordWrongServiceImpl"></bean>
 	<bean id="HomeworkService" class="indi.cyken.service.impl.HomeworkServiceImpl"></bean>
+	<bean id="SClassService" class="indi.cyken.service.impl.SClassServiceImpl"></bean>
 	
 
    <bean id="UserDao" class="indi.cyken.dao.impl.UserDaoImpl"/>
@@ -28,5 +29,6 @@
    <bean id="ScoreDao" class="indi.cyken.dao.impl.ScoreDaoImpl"/>
    <bean id="WordWrongDao" class="indi.cyken.dao.impl.WordWrongDaoImpl"/>
    <bean id="HomeworkDao" class="indi.cyken.dao.impl.HomeworkDaoImpl"/>
+   <bean id="SClassDao" class="indi.cyken.dao.impl.SClassDaoImpl"/>
      
 </beans>

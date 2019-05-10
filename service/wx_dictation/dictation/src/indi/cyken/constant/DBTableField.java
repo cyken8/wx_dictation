@@ -8,7 +8,7 @@ package indi.cyken.constant;
 public interface DBTableField {
 	
 	//标准单词
-	String WORD_COMETYPE_STANDAR="WC1001";
+	String WORD_COMETYPE_STANDARD="WC1001";
 	//自定义单词
 	String WORD_COMETYPE_EX="WC1002";
 	
@@ -23,7 +23,7 @@ public interface DBTableField {
 	String UNIT_COMETYPE_EX="";
 	
 	//标准课本
-	String BOOK_COMETYPE_STANDAR="";
+	String BOOK_COMETYPE_STANDAR="BT100";
 	//自定义keb 
 	String BOOK_COMETYPE_EX="";
 	
@@ -31,6 +31,9 @@ public interface DBTableField {
 	String WORD_LENGTYPE_SHORTWORD="WL1001";
 	String WORD_LENGTYPE_LONGWORD="WL1002";
 	
+	//角色
+	String USER_ROLE_STUDENT="UT003";		//学生角色
+	String USER_ROLE_TEACHER="UT004";		//教师角色	
 	
 
 }

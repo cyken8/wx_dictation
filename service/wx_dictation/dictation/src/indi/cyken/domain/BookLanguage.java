@@ -9,6 +9,18 @@ public class BookLanguage {
 
 	private String langid;
 	private String langname;
+	
+	public BookLanguage() {
+		
+	}
+	
+	
+	public BookLanguage(String langid) {
+		super();
+		this.langid = langid;
+	}
+
+
 	public String getLangid() {
 		return langid;
 	}

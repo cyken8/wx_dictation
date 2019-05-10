@@ -22,14 +22,42 @@ import indi.cyken.utils.DataSourceUtils;
 
 public class BookDaoImpl implements BookDao {
 
+//	/**
+//	 * 查询所有课本
+//	 */
+//	@Override
+//	public List<Book> findAll() throws Exception {
+//		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+//		String sql="select * from t_book";
+//		return qr.query(sql, new BeanListHandler<>(Book.class));
+//	}
+	
 	/**
 	 * 查询所有课本
 	 */
 	@Override
 	public List<Book> findAll() throws Exception {
 		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
-		String sql="select * from t_book";
-		return qr.query(sql, new BeanListHandler<>(Book.class));
+		String sql="SELECT * FROM t_book b, t_book_version bv,t_book_lang bl,t_book_type bt,t_book_category bc\r\n" + 
+				"WHERE b.versionid=bv.versionid AND b.langid=bl.langid AND b.typeid=bt.typeid AND b.cid=bc.cid;";
+		List<Map<String, Object>> query = qr.query(sql, new MapListHandler());
+		List<Book> list=new LinkedList<>();
+		for (Map<String, Object> map : query) {
+			//封装Book
+			BookVersion version=new BookVersion();
+			BeanUtils.populate(version, map);
+			BookLanguage language=new BookLanguage();
+			BeanUtils.populate(language, map);
+			Category category=new Category();
+			BeanUtils.populate(category, map);
+			BookType booktype=new BookType();
+			BeanUtils.populate(booktype, map);
+
+			Book book=new Book(version,language,booktype,category);
+			BeanUtils.populate(book, map);
+			list.add(book);
+		}
+		return list;
 	}
 
 	/**
@@ -91,6 +119,35 @@ public class BookDaoImpl implements BookDao {
 			list.add(book);
 		}
 		return list;
+	}
+
+	/**
+	 * 添加一本课本
+	 */
+	@Override
+	public int addOneBook(Book book) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="insert into t_book values(?,?,?,?,?,?,?,?);";
+		int ret = qr.update(sql,book.getBookid(),
+				book.getBookname(),
+				book.getVersion().getVersionid(),
+				book.getLanguage().getLangid(),
+				book.getBooktype().getTypeid(),
+				book.getBookCategory().getCid(),
+				book.getCover(),
+				book.getStatus());
+		
+		return ret;
+	}
+
+	/**
+	 * 管理员删除一本课本
+	 */
+	@Override
+	public int delOneBook(String bookid) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="delete from t_book where bookid=?";
+		return qr.update(sql, bookid);
 	}
 
 

@@ -27,7 +27,6 @@ public class BookServlet extends BaseServlet {
 	 */
 	public String findAll(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("调用了BookServlet中的FindAll方法");
 		BookService bs = (BookService) BeanFactory.getBean("BookService");
 		List<Book> blist = null;
 		try {

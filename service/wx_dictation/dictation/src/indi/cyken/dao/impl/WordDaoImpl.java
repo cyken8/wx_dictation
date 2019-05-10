@@ -35,7 +35,7 @@ public class WordDaoImpl implements WordDao {
 				"UNION \r\n" + 
 				"SELECT w2.wordid,w2.wordtext,w2.voiceurl,w2.lengtypeid,w2.cometypeid,w2.courseid FROM t_word w2,t_word_ex we WHERE  we.userid=? AND we.wordid=w2.wordid AND w2.courseid=?; ";
 		
-		List<Map<String, Object>> query = qr.query(sql, new MapListHandler(), DBTableField.WORD_COMETYPE_STANDAR,courseid,userid,courseid);
+		List<Map<String, Object>> query = qr.query(sql, new MapListHandler(), DBTableField.WORD_COMETYPE_STANDARD,courseid,userid,courseid);
 		List<Word> list=new LinkedList<>();
 		for (Map<String, Object> map : query) {
 			WordLengType wl=new WordLengType();
@@ -130,7 +130,7 @@ public class WordDaoImpl implements WordDao {
 		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
 		String sql="SELECT * FROM t_word  WHERE cometypeid= ? AND courseid=?";
 		
-		List<Map<String, Object>> query = qr.query(sql, new MapListHandler(), DBTableField.WORD_COMETYPE_STANDAR,courseid);
+		List<Map<String, Object>> query = qr.query(sql, new MapListHandler(), DBTableField.WORD_COMETYPE_STANDARD,courseid);
 		List<Word> list=new LinkedList<>();
 		for (Map<String, Object> map : query) {
 			WordLengType wl=new WordLengType();
@@ -150,6 +150,64 @@ public class WordDaoImpl implements WordDao {
 		}
 		return list;
 	}
+
+	/**
+	 * 添加标准单词
+	 */
+	@Override
+	public int addWordStandard(Word word) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="insert into t_word values(?,?,?,?,?,?);";
+		int ret = qr.update(sql,word.getWordid(),
+				word.getWordtext(),
+				word.getVoiceurl(),
+				word.getLengtype().getLengtypeid(),
+				word.getCometype().getCometypeid(),
+				word.getCourse().getCourseid());
+		return ret;
+	}
+
+	/**
+	 * 删除标准单词
+	 */
+	@Override
+	public int delWordStandard(String wordid) throws Exception {
+		// TODO Auto-generated method stub
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="delete from t_word where wordid=?";
+		return qr.update(sql, wordid);
+	}
+
+	/**
+	 * 根据课时编号获取标准单词
+	 */
+	@Override
+	public List<Word> getWordStandardByCid(String courseid) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="SELECT * FROM t_word w1  WHERE w1.cometypeid= ? AND w1.courseid=?" ;
+		
+		List<Map<String, Object>> query = qr.query(sql, new MapListHandler(), DBTableField.WORD_COMETYPE_STANDARD,courseid);
+		List<Word> list=new LinkedList<>();
+		for (Map<String, Object> map : query) {
+			WordLengType wl=new WordLengType();
+			BeanUtils.populate(wl, map);
+			WordComeType wc=new WordComeType();
+			BeanUtils.populate(wc, map);
+			Course course=new Course();
+			BeanUtils.populate(course, map);
+			
+			Word word=new Word();
+			BeanUtils.populate(word, map);
+			word.setLengtype(wl);
+			word.setCometype(wc);
+			word.setCourse(course);
+			
+			list.add(word);
+		}
+		return list;
+	}
+	
+
 
 
 	

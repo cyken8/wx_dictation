@@ -21,6 +21,10 @@ public interface BookDao  {
 
 	List<Book> getByCategoryId(String categoryid) throws Exception;
 
+	int addOneBook(Book book)throws Exception;
+
+	int delOneBook(String bookid)throws Exception;
+
 
 
 

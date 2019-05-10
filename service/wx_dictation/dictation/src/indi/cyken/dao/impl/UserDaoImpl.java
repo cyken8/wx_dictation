@@ -13,6 +13,7 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 
+import indi.cyken.constant.DBTableField;
 import indi.cyken.dao.UserDao;
 
 import indi.cyken.domain.City;
@@ -108,13 +109,16 @@ public class UserDaoImpl implements UserDao{
 	 * 根据用户id和密码查询用户是否存在
 	 */
 	@Override
-	public UserTwo queryByUidAndPass(String userid, String password) throws Exception {
+	public User queryByUidAndPass(String userid, String password) throws Exception {
 		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
 		String sql="select *  from t_user  where userid = ? and password=?  limit 1";
 		Map<String, Object> query = qr.query(sql, new MapHandler(), userid,password);
-		UserTwo user=new UserTwo();
+		Role role=new Role();
+		BeanUtils.populate(role, query);
+		User user=new User();
 		ConvertUtils.register(new DateConverter(null), java.util.Date.class);		//必须有这一句，获取的值有java中不识别的数据类型。如：java.sql.date，并不是java中的时间类型java.utils.date。
 		BeanUtils.populate(user, query);
+		user.setRole(role);
 		return user;
 		
 	}
@@ -214,6 +218,47 @@ public class UserDaoImpl implements UserDao{
 		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
 		String sql="delete from t_user where userid=?";
 		return qr.update(sql, userid);
+	}
+
+
+	/**
+	 * 根据班级id获取班级下所有学生身份的用户
+	 */
+	@Override
+	public List<User> getAllStudentByClid(String classid) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="SELECT * FROM t_user u ,t_role r,t_organization org,t_grade g,t_class cla,t_province pr,t_city c \r\n" + 
+				"WHERE u.roleid=? AND u.classid=? AND u.roleid=r.roleid AND u.orgid=org.orgid AND u.gradeid=g.gradeid \r\n" + 
+				"AND u.classid=cla.classid AND u.provinceid=pr.provinceid AND u.cityid=c.cityid;";
+		
+		List<Map<String, Object>> query = qr.query(sql, new MapListHandler(),DBTableField.USER_ROLE_STUDENT,classid);
+		List<User> list=new LinkedList<>();
+		for (Map<String, Object> map : query) {
+			Role role=new Role();
+			BeanUtils.populate(role, map);
+			
+			Organization org=new Organization();
+			BeanUtils.populate(org, map);
+			
+			Grade grade=new Grade();
+			BeanUtils.populate(grade, map);
+
+			SClass sclass=new SClass();
+			BeanUtils.populate(sclass, map);
+
+			Province province=new Province();
+			BeanUtils.populate(province, map);
+
+			City city=new City();
+			BeanUtils.populate(city, map);
+
+			User user =new User(role,org,grade,sclass,province,city);
+			BeanUtils.populate(user, map);
+			
+			list.add(user);
+		}
+		return list;
+		
 	}
 	
 	

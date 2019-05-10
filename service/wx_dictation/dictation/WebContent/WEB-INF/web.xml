@@ -19,12 +19,8 @@
     <url-pattern>/base</url-pattern>
   </servlet-mapping>
   <error-page>
-    <error-code>500</error-code>
-    <location>/500.jsp</location>
-  </error-page>
-  <error-page>
     <error-code>404</error-code>
-    <location>/404.jsp</location>
+    <location>/404.html</location>
   </error-page>
   <servlet>
     <description></description>
@@ -185,5 +181,85 @@
   <servlet-mapping>
     <servlet-name>TestServlet</servlet-name>
     <url-pattern>/test</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SClassServlet</display-name>
+    <servlet-name>SClassServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.SClassServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SClassServlet</servlet-name>
+    <url-pattern>/sclass</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserManageServlet</display-name>
+    <servlet-name>UserManageServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.admin.UserManageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserManageServlet</servlet-name>
+    <url-pattern>/userManage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BookManageSerlvet</display-name>
+    <servlet-name>BookManageSerlvet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.admin.BookManageSerlvet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BookManageSerlvet</servlet-name>
+    <url-pattern>/bookManage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UnitManageServlet</display-name>
+    <servlet-name>UnitManageServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.admin.UnitManageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UnitManageServlet</servlet-name>
+    <url-pattern>/unitManage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CourseManageServlet</display-name>
+    <servlet-name>CourseManageServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.admin.CourseManageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CourseManageServlet</servlet-name>
+    <url-pattern>/courseManage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CategoryManageSerlvet</display-name>
+    <servlet-name>CategoryManageSerlvet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.admin.CategoryManageSerlvet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CategoryManageSerlvet</servlet-name>
+    <url-pattern>/categoryManage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>WordManageServlet</display-name>
+    <servlet-name>WordManageServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.admin.WordManageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WordManageServlet</servlet-name>
+    <url-pattern>/wordManage</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <description></description>
+    <display-name>TeacherServlet</display-name>
+    <servlet-name>TeacherServlet</servlet-name>
+    <servlet-class>indi.cyken.web.servlet.teacher.TeacherServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TeacherServlet</servlet-name>
+    <url-pattern>/teacher</url-pattern>
   </servlet-mapping>
 </web-app>

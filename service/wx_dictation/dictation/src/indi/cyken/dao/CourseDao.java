@@ -11,4 +11,8 @@ public interface CourseDao {
 
 	BookLanguage getBookLangByCourseid(String courseId) throws Exception;
 
+	int addOneCourse(Course course) throws Exception;
+
+	int delOneCourse(String courseid)throws Exception;
+
 }

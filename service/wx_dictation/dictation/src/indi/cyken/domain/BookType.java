@@ -9,6 +9,18 @@ public class BookType {
 
 	private String typeid;
 	private String typename;
+	
+	public BookType() {
+		
+	}
+	
+	
+	public BookType(String typeid) {
+		super();
+		this.typeid = typeid;
+	}
+
+
 	public String getTypeid() {
 		return typeid;
 	}

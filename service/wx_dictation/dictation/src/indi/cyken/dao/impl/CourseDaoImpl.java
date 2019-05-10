@@ -7,7 +7,6 @@ import java.util.Map;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 
 import indi.cyken.dao.CourseDao;
@@ -16,7 +15,6 @@ import indi.cyken.domain.BookLanguage;
 import indi.cyken.domain.BookType;
 import indi.cyken.domain.BookVersion;
 import indi.cyken.domain.Category;
-import indi.cyken.domain.Collection;
 import indi.cyken.domain.Course;
 import indi.cyken.domain.Unit;
 import indi.cyken.utils.DataSourceUtils;
@@ -29,7 +27,7 @@ public class CourseDaoImpl implements CourseDao {
 	@Override
 	public List<Course> getByUid(String unitid) throws Exception {
 		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
-		String sql="select * from t_course c,t_unit u where unitid=? and c.unitid=u.unitid; ";
+		String sql="select * from t_course c,t_unit u where c.unitid=? and c.unitid=u.unitid; ";
 		List<Map<String, Object>> query = qr.query(sql, new MapListHandler(), unitid);
 
 		List<Course> list=new LinkedList<>();
@@ -75,6 +73,29 @@ public class CourseDaoImpl implements CourseDao {
 		BookLanguage language = qr.query(sql, new BeanHandler<>(BookLanguage.class), courseId);
 		return language;
 
+	}
+
+	/**
+	 * 添加一个课时
+	 */
+	@Override
+	public int addOneCourse(Course course) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="insert into t_course values(?,?,?);";
+		int ret = qr.update(sql,course.getCourseid(),
+				course.getCoursename(),
+				course.getUnit().getUnitid());
+		return ret;
+	}
+
+	/**
+	 * 删除一个课时
+	 */
+	@Override
+	public int delOneCourse(String courseid) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="delete from t_course where courseid=?";
+		return qr.update(sql, courseid);
 	}
 
 }

@@ -10,6 +10,26 @@ import java.io.Serializable;
 public class Category implements Serializable {
 	private String cid;
 	private String cname;
+	
+	public Category() {
+		
+	}
+	
+	
+	public Category(String cid) {
+		super();
+		this.cid = cid;
+	}
+
+	
+
+	public Category(String cid, String cname) {
+		super();
+		this.cid = cid;
+		this.cname = cname;
+	}
+
+
 	public String getCid() {
 		return cid;
 	}
@@ -22,6 +42,9 @@ public class Category implements Serializable {
 	public void setCname(String cname) {
 		this.cname = cname;
 	}
+
+
+
 	
 	
 }

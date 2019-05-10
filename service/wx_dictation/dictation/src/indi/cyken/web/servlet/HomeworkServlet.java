@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import indi.cyken.constant.FEIPCodeEnum;
 import indi.cyken.domain.Homework;
+import indi.cyken.domain.Word;
 import indi.cyken.service.HomeworkService;
 import indi.cyken.utils.BeanFactory;
 import indi.cyken.utils.UUIDUtils;
@@ -23,6 +24,8 @@ import net.sf.json.JSONObject;
 public class HomeworkServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
+
+	
 	/**
 	 * 根据用户id和传递过来的单词列表json字符串更新用户对单词的筛选状态
 	 * 
@@ -32,12 +35,11 @@ public class HomeworkServlet extends BaseServlet {
 	 * @throws Exception
 	 */
 	public String WXAddWordHomework(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// 1.获取userid和wordlist
-		System.out.println("调用了HomeworkServlet 中的 WXAddWordHomework ");
-		String userid = request.getParameter("userid");
+		String classid = request.getParameter("classid");
 		String wordListJsonstr = request.getParameter("wordListJsonstr");
 		String hwname = request.getParameter("hwname"); // 作业名
-		System.out.println("userid = " + userid + " wordListJsonstr = " + wordListJsonstr);
+		System.out.println("作业名："+hwname);
+		System.out.println("classid = " + classid + " wordListJsonstr = " + wordListJsonstr);
 		JSONArray wordListObj = JSONArray.fromObject(wordListJsonstr);
 		List<String> list = new LinkedList<>();
 		for (int i = 0; i < wordListObj.size(); i++) {
@@ -46,7 +48,7 @@ public class HomeworkServlet extends BaseServlet {
 		}
 		HomeworkService ws = (HomeworkService) BeanFactory.getBean("HomeworkService");
 		String hwid = UUIDUtils.getCode();
-		int ret = ws.addHomework(hwid, hwname, userid, list);
+		int ret = ws.addHomework(hwid, hwname, classid, list);
 		JSONObject data = new JSONObject();
 		if (ret != -1) {
 			WriteBackUtil.WriteBackJsonStr(1, FEIPCodeEnum.OK.getCode(), FEIPCodeEnum.OK.getMsg(), data, response);
@@ -59,7 +61,7 @@ public class HomeworkServlet extends BaseServlet {
 	}
 
 	/**
-	 * 根据用户id和传递过来的单词列表json字符串更新用户对单词的筛选状态
+	 * 获取作业
 	 * 
 	 * @param request
 	 * @param response
@@ -68,14 +70,46 @@ public class HomeworkServlet extends BaseServlet {
 	 */
 	public String WXGetAllHomework(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 1.获取userid和wordlist
-		String userid = request.getParameter("userid");
+		String classid = request.getParameter("classid");
+		System.out.println("classid: "+classid);
 		HomeworkService hs = (HomeworkService) BeanFactory.getBean("HomeworkService");
 		List<Homework> hlist = null;
 		JSONObject data = new JSONObject();
 		try {
-			hlist = hs.getAllHomeworkByUid(userid);
+			hlist = hs.getAllHomeworkByUid(classid);
 			if (hlist != null) {
 				data.put("homeworkList", hlist);
+				WriteBackUtil.WriteBackJsonStr(1, FEIPCodeEnum.OK.getCode(), FEIPCodeEnum.OK.getMsg(), data, response);
+				return "success";
+			} else {
+				WriteBackUtil.WriteBackJsonStr(0, FEIPCodeEnum.FAIL.getCode(), FEIPCodeEnum.FAIL.getMsg(), data,response);
+				return "fail";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+	
+	/**
+	 * 根据作业编号获取作业下的所有单词
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public String WXGetAllWordByHWid(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String hwid = request.getParameter("hwid");		//作业编号
+		System.out.println("hwid: "+hwid);
+		HomeworkService hs = (HomeworkService) BeanFactory.getBean("HomeworkService");
+		List<Word> wlist = null;
+		JSONObject data = new JSONObject();
+		try {
+			wlist = hs.getAllWordByHWid(hwid);
+			if (wlist != null) {
+				data.put("wordList", wlist);
 				WriteBackUtil.WriteBackJsonStr(1, FEIPCodeEnum.OK.getCode(), FEIPCodeEnum.OK.getMsg(), data, response);
 				return "success";
 			} else {

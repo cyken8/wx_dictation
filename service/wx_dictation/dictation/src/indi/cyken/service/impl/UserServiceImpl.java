@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
 	 * 根据用户id和密码查询用户是否存在
 	 */
 	@Override
-	public UserTwo queryByUidAndPass(String userid, String password) throws Exception {
+	public User queryByUidAndPass(String userid, String password) throws Exception {
 		UserDao ud=(UserDao) BeanFactory.getBean("UserDao");
 		// TODO Auto-generated method stub
 		return ud.queryByUidAndPass(userid,password);
@@ -100,6 +100,17 @@ public class UserServiceImpl implements UserService {
 		UserDao ud=(UserDao) BeanFactory.getBean("UserDao");
 		// TODO Auto-generated method stub
 		return ud.delOneUserByUid(userid);
+	}
+
+
+	/**
+	 * 根据班级id获取班级下所有学生身份的用户
+	 */
+	@Override
+	public List<User> getAllStudentByClid(String classid) throws Exception {
+		UserDao ud=(UserDao) BeanFactory.getBean("UserDao");
+		// TODO Auto-generated method stub
+		return ud.getAllStudentByClid(classid);
 	}
 
 	

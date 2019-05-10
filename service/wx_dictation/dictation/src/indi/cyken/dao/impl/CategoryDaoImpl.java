@@ -20,4 +20,22 @@ public class CategoryDaoImpl implements CategoryDao {
 		return qr.query(sql, new BeanListHandler<>(Category.class));
 	}
 
+	
+	@Override
+	public int addOneCategory(Category category) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="insert into t_book_category values(?,?);";
+		int ret = qr.update(sql,category.getCid(),category.getCname());
+		return ret;
+	}
+
+
+	@Override
+	public int delOneCategory(String cid) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="delete from t_book_category where cid=?;";
+		int ret = qr.update(sql,cid);
+		return ret;
+	}
+
 }

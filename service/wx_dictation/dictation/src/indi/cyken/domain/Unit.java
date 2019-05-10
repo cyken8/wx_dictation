@@ -14,6 +14,26 @@ public class Unit {
 	private String unitname;
 	private Book   book;
 	
+	
+	public Unit() {
+		
+	}
+	
+
+	public Unit(String unitid) {
+		super();
+		this.unitid = unitid;
+	}
+
+
+	public Unit(String unitid, String unitname, Book book) {
+		super();
+		this.unitid = unitid;
+		this.unitname = unitname;
+		this.book = book;
+	}
+
+
 	//包含哪些课时
 	private List<Course> courselist=new LinkedList<>();
 	
