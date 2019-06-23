@@ -27,8 +27,14 @@ public class User {
 	public User() {
 		
 	}
-
 	
+	
+	public User(String userid) {
+		super();
+		this.userid = userid;
+	}
+
+
 	public User(String userid, String username, String password, String avatar, String sex, Date birthday, String email,
 			Role role, Organization org, Grade grade, SClass sclass, Province province, City city, String open_id,
 			String state) {

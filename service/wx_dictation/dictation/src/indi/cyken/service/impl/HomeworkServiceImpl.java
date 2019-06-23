@@ -2,9 +2,7 @@ package indi.cyken.service.impl;
 
 import java.util.List;
 
-import indi.cyken.dao.CategoryDao;
 import indi.cyken.dao.HomeworkDao;
-import indi.cyken.dao.WordDao;
 import indi.cyken.domain.Homework;
 import indi.cyken.domain.Word;
 import indi.cyken.service.HomeworkService;
@@ -57,6 +55,15 @@ public class HomeworkServiceImpl implements HomeworkService {
 	public List<Word> getAllWordByHWid(String hwid) throws Exception {
 		HomeworkDao cd=(HomeworkDao) BeanFactory.getBean("HomeworkDao");
 		return cd.getAllWordByHWid(hwid);
+	}
+
+	/**
+	 * 删除一项作业
+	 */
+	@Override
+	public int delOneHomeworkByHwid(String hwid) throws Exception {
+		HomeworkDao cd=(HomeworkDao) BeanFactory.getBean("HomeworkDao");
+		return cd.delOneHomeworkByHwid(hwid);
 	}
 
 }

@@ -15,6 +15,19 @@ public class Homework {
 	private User user;
 	
 	private List<HomeworkItem> items=new LinkedList<>();
+	
+	public Homework() {
+		
+	}
+	
+	
+
+	public Homework(String hwid) {
+		super();
+		this.hwid = hwid;
+	}
+
+
 
 	public String getHwid() {
 		return hwid;

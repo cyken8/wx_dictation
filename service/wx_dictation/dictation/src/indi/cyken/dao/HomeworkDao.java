@@ -15,4 +15,6 @@ public interface HomeworkDao {
 
 	List<Word> getAllWordByHWid(String hwid) throws Exception;
 
+	int delOneHomeworkByHwid(String hwid) throws Exception;
+
 }

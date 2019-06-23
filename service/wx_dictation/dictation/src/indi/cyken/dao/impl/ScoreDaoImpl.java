@@ -11,6 +11,7 @@ import org.apache.commons.dbutils.handlers.MapListHandler;
 import indi.cyken.constant.DBTableField;
 import indi.cyken.dao.ScoreDao;
 import indi.cyken.domain.Course;
+import indi.cyken.domain.HomeworkScore;
 import indi.cyken.domain.Score;
 import indi.cyken.domain.Unit;
 import indi.cyken.domain.User;
@@ -98,6 +99,18 @@ public class ScoreDaoImpl implements ScoreDao {
 			list.add(score);	
 		}
 		return list;
+	}
+
+	/**
+	 * 添加作业成绩
+	 */
+	@Override
+	public int addHomeworkScore(HomeworkScore hwScore) throws Exception {
+		QueryRunner qr = new QueryRunner();
+		String sql="insert into t_homework_progress(userid,hwid,score,state) values(?,?,?,?) ";
+		int ret=qr.update(DataSourceUtils.getConnection(),sql,hwScore.getUser().getUserid(),
+				hwScore.getHomework().getHwid(),hwScore.getScore(),hwScore.getState());
+		return ret;
 	}
 
 	

@@ -3,6 +3,7 @@ package indi.cyken.service.impl;
 import java.util.List;
 
 import indi.cyken.dao.ScoreDao;
+import indi.cyken.domain.HomeworkScore;
 import indi.cyken.domain.Score;
 import indi.cyken.service.ScoreService;
 import indi.cyken.utils.BeanFactory;
@@ -36,6 +37,15 @@ public class ScoreServiceImpl implements ScoreService{
 		ScoreDao sd=(ScoreDao) BeanFactory.getBean("ScoreDao");
 		return sd.getScoreOneCourse(userid,courseid);
 
+	}
+
+	/**
+	 * 添加作业成绩
+	 */
+	@Override
+	public int addHomeworkScore(HomeworkScore hwScore) throws Exception {
+		ScoreDao sd=(ScoreDao) BeanFactory.getBean("ScoreDao");
+		return sd.addHomeworkScore(hwScore);
 	}
 
 }

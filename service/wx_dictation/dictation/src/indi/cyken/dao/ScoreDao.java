@@ -2,6 +2,7 @@ package indi.cyken.dao;
 
 import java.util.List;
 
+import indi.cyken.domain.HomeworkScore;
 import indi.cyken.domain.Score;
 
 public interface ScoreDao {
@@ -11,5 +12,7 @@ public interface ScoreDao {
 	List<Score> getScoreAllCourse(String userid) throws Exception;
 
 	List<Score> getScoreOneCourse(String userid, String courseid) throws Exception;
+
+	int addHomeworkScore(HomeworkScore hwScore) throws Exception;
 
 }

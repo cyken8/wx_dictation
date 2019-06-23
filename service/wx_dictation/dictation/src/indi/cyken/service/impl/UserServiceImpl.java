@@ -2,13 +2,14 @@ package indi.cyken.service.impl;
 
 import java.util.List;
 
-
+import indi.cyken.constant.DBTableField;
 import indi.cyken.dao.UserDao;
 import indi.cyken.dao.impl.UserDaoImpl;
 import indi.cyken.domain.User;
 import indi.cyken.domain.UserTwo;
 import indi.cyken.service.UserService;
 import indi.cyken.utils.BeanFactory;
+import indi.cyken.utils.DataSourceUtils;
 
 public class UserServiceImpl implements UserService {
 
@@ -39,8 +40,27 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public int add(User user) throws Exception {
-		UserDao dao=new UserDaoImpl();
-		return dao.add(user);
+		try {
+			//1.开启事务
+			DataSourceUtils.startTransaction();
+			UserDao dao=new UserDaoImpl();
+			int ret=dao.add(user);
+			//如果是教师身份并且添加用户成功，则给教师添加一个班级信息
+			if(user.getRole().getRoleid().equals(DBTableField.USER_ROLE_TEACHER)&&ret>0) {
+				ret = addTeacherClass(user);
+			}
+	
+			//4.事务处理
+			DataSourceUtils.commitAndClose();
+			return ret;
+		} catch (Exception e) {
+			e.printStackTrace();
+			DataSourceUtils.rollbackAndClose();
+			throw e;
+		}		
+		
+		
+		
 	}
 
 	/**
@@ -111,6 +131,17 @@ public class UserServiceImpl implements UserService {
 		UserDao ud=(UserDao) BeanFactory.getBean("UserDao");
 		// TODO Auto-generated method stub
 		return ud.getAllStudentByClid(classid);
+	}
+
+
+	/**
+	 * 添加教师拥有的班级
+	 */
+	@Override
+	public int addTeacherClass(User user) throws Exception {
+		UserDao ud=(UserDao) BeanFactory.getBean("UserDao");
+		// TODO Auto-generated method stub
+		return ud.addTeacherClass(user);
 	}
 
 	

@@ -260,6 +260,20 @@ public class UserDaoImpl implements UserDao{
 		return list;
 		
 	}
+
+
+	/**
+	 * 给t_user_class添加一条教师拥有的班级记录
+	 */
+	@Override
+	public int addTeacherClass(User user) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="insert into t_user_class(userid,classid) values(?,?);";
+		int ret = qr.update(sql,user.getUserid(),
+				user.getSclass().getClassid());
+		return ret;
+		
+	}
 	
 	
 	

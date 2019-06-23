@@ -82,4 +82,14 @@ public class HomeworkDaoImpl implements HomeworkDao {
 		return list;
 	}
 
+	/**
+	 * 删除一项作业
+	 */
+	@Override
+	public int delOneHomeworkByHwid(String hwid) throws Exception {
+		QueryRunner qr = new QueryRunner(DataSourceUtils.getDataSource());
+		String sql="delete from t_homework where hwid=?";
+		return qr.update(sql,hwid);
+	}
+
 }

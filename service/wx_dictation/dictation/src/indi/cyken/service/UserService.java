@@ -29,6 +29,8 @@ public interface UserService {
 
 	List<User> getAllStudentByClid(String classid)throws Exception;
 
+	int addTeacherClass(User user) throws Exception;
+
 	
 
 }
